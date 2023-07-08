@@ -1,6 +1,8 @@
 
 import 'package:almacen_web_fe/models/movements_outputs.dart';
+import 'package:almacen_web_fe/providers/filepdf_movement_provider.dart';
 import 'package:almacen_web_fe/providers/movements_outputs_provider.dart';
+import 'package:almacen_web_fe/services/pdf_redirect.dart';
 import 'package:almacen_web_fe/ui/design/custom_colors.dart';
 import 'package:almacen_web_fe/ui/modals/movements_inputs/register_movements_inputs.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +25,7 @@ class MovementsDTS extends DataTableSource {
 
     final movementOutput = this.movementsOutputs[index];
      final movementOutputProvider = Provider.of<MovementsOutputsProvider>(context, listen: false);
+     final pdfProvider = Provider.of<FilePdfMovementProvider>(context, listen: false);
     return DataRow.byIndex(
       index: index,
       cells: [
@@ -33,12 +36,23 @@ class MovementsDTS extends DataTableSource {
         DataCell( 
           Row(
             children: [
-              // IconButton(
-              //   icon: Icon( Icons.remove_red_eye_sharp, color: CustomColor.infoColor().withOpacity(0.8) ),
-              //   onPressed: () {
-                 
-              //   }
-              // ),
+               IconButton(
+                 icon: Icon( Icons.download, color: CustomColor.infoColor().withOpacity(0.8) ),
+                  onPressed: () async {
+                  
+                  try {
+                      
+                      final pdfNewBytes = await pdfProvider.getReporteMovimientoPorID(movementOutput.codigo ?? "");
+                      
+                      PDFredirectUtility.openPDFInNewTab(pdfNewBytes);
+
+                      NotificationsService.showSnackbar('Se descargo el reporte de movimiento de ${movementOutput.codigo} !');
+
+                  } catch (e) {
+                      NotificationsService.showSnackbarError('No se pudo obtener el reporte de movimiento');
+                  }
+                 }
+               ),
               (movementOutput.estado == 'Aprobado')
               ? IconButton(
                 icon: Icon( Icons.cancel, color: Colors.red.withOpacity(0.8) ),

@@ -101,7 +101,7 @@ class _ProductsViewState extends State<ProductsView> {
               ],
               source: ProductsDTS(products, context),
               header: Row(children: [
-                Text('Movimientos'),
+                Text('Productos'),
                 Spacer(),
                 DropdownButton<String>(
                   value: dropdownValue,
