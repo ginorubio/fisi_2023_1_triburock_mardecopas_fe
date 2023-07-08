@@ -124,7 +124,7 @@ class _EditProductsModalState extends State<EditProductsModal> {
                          try {
                             
                             await productProvider.updateProduct(widget.products?.id ?? 0, descripcion,
-                            double.parse(precio), double.parse(stock_min));
+                            double.parse(precio), int.parse(stock_min));
                             NotificationsService.showSnackbar('${widget.products?.nombre ?? ""} Actualizado!');
                             Navigator.of(context).pop();
 
