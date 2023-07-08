@@ -21,7 +21,7 @@ class BackgroundAlmacen extends StatelessWidget {
   BoxDecoration buildBoxDecoration() {
     return BoxDecoration(
         image: DecorationImage(
-          image: Image.network("https://e1.pxfuel.com/desktop-wallpaper/23/777/desktop-wallpaper-the-warehouse-kargo-warehouse.jpg", ).image,
+          image: Image.asset('warehouse-bg.jpg').image,
           fit: BoxFit.cover
         )
     );

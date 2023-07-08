@@ -48,7 +48,10 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
 flutter:
-
+  assets:
+    - web/assets/home_img.jpg
+    - web/assets/logo_almacenera.png
+    - web/assets/warehouse-bg.jpg
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
