@@ -94,7 +94,7 @@ class _RegisterMovementsOutputsState extends State<RegisterMovementsOutputs> {
                 child: Column(
 
                   children: [
-                    CustomInputs.customTextFieldForm((value) => fecha = value, "Fecha", "aaaa-mm-dd"),
+                    CustomInputs.customTextFieldForm((value) => fecha = value, "Fecha", "AAAA-MM-dd"),
                     SizedBox(height: 20,),
                      CustomInputs.customTextFieldForm((value) => cliente = value, "Cliente", "Ingrese su nombre"),
                      Row(

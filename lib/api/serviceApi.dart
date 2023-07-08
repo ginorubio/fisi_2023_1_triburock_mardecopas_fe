@@ -1,6 +1,6 @@
 
 
-
+import 'dart:typed_data';
 import 'package:dio/dio.dart';
 
 import '../services/local_storage.dart';
@@ -41,6 +41,21 @@ class ServiceApi {
       throw('Error en el GET');
     }
   }
+
+  static Future<Uint8List> httpGetPDF( String path ) async {
+    try {
+      
+      final resp = await _dio.get(path, options: Options(responseType: ResponseType.bytes));
+      print(resp.data);
+      return resp.data;
+
+
+    } catch (e) {
+      print(e);
+      throw('Error en el GET PDF');
+    }
+  }
+
 
   static Future post( String path, Map<String, dynamic> data ) async {
 
