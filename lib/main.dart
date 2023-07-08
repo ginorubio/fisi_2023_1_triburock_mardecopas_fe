@@ -1,6 +1,7 @@
 import 'package:almacen_web_fe/providers/auth_provider.dart';
 
 import 'package:almacen_web_fe/providers/category_provider.dart';
+import 'package:almacen_web_fe/providers/filepdf_movement_provider.dart';
 
 import 'package:almacen_web_fe/providers/movements_inputs_provider.dart';
 import 'package:almacen_web_fe/providers/movements_outputs_provider.dart';
@@ -40,7 +41,8 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CategoryProvider()),
         ChangeNotifierProvider(create: (_) => ProductsProvider()),
         ChangeNotifierProvider(create: (_) => UsersProvider()),
-        ChangeNotifierProvider(create: (_) => ProductsItemProvider())
+        ChangeNotifierProvider(create: (_) => ProductsItemProvider()),
+        ChangeNotifierProvider(create: (_) => FilePdfMovementProvider()),
       ],
       child: MyApp(),
     );
