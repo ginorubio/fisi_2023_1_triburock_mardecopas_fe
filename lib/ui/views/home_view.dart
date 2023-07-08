@@ -11,12 +11,12 @@ class HomeView extends StatelessWidget {
         physics: ClampingScrollPhysics(),
         children: [
           Navbar(text: "Inicio"),
-          Text('Home View' ),
-
-          SizedBox( height: 10 ),
 
           Container(
-            child: Text("Home View child"),
+            child: Image.network(
+              'https://capsa2in1.com/wp-content/uploads/2022/05/4-scaled.jpg',
+            fit: BoxFit.cover, // Ajusta la imagen al tamaño del contenedor
+            ),
           )
 
         ],

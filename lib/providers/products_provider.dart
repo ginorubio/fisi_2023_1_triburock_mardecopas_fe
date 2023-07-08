@@ -181,7 +181,7 @@ getProductsForCode(String codigo) async {
 
   }
 
-  Future updateProduct( int id, String descripcion, double precio, double stock_min) async {
+  Future updateProduct( int id, String descripcion, double precio, int stock_min) async {
 
     final data = {
       "descripcion" : descripcion,
@@ -198,7 +198,13 @@ getProductsForCode(String codigo) async {
       if (productsResp.data != null){
           Products product = products.firstWhere((element) => element.id == id);
           int index = products.indexOf(product);
-          products[index] = productsResp.data![0];
+          final productNew = Products(id: id,nombre: products[index].nombre ,
+          codigo: products[index].codigo ,descripcion:descripcion ,
+          unidad_medida: products[index].unidad_medida ,
+          categoria: products[index].categoria,
+          precio:precio ,costo: products[index].costo, 
+          stock_min: stock_min ,stock: products[index].stock ,estado: products[index].estado );
+          products[index] = productNew;
       } else{
           String message = productsResp.message ?? 'Error al actualizar el Producto';
           throw message;

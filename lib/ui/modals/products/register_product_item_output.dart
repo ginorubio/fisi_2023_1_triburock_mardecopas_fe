@@ -67,7 +67,7 @@ class _RegisterProductIntemOutputState extends State<RegisterProductIntemOutput>
                      SizedBox(height: 30,),
                      CustomInputs.customTextFieldFormDisabled("Nommbre ", product.nombre ?? ""),
                     SizedBox(height: 20,),
-                    CustomInputs.customTextFieldFormDisabled("Stock (${product.unidad_medida})", product.stock.toString()),
+                    CustomInputs.customTextFieldFormDisabled("Stock (${product.unidad_medida ?? ""})", (product.stock ?? 0).toString()),
                     SizedBox(height: 20,),
                     CustomInputs.customTextFieldFormDisabled("Categoría", product.categoria ?? ""),
                      
@@ -104,7 +104,7 @@ class _RegisterProductIntemOutputState extends State<RegisterProductIntemOutput>
                       ),
                     CustomInputs.customTextFieldFormDisabled("Descripción", product.descripcion ?? ""),
                     SizedBox(height: 20,),
-                    CustomInputs.customTextFieldFormDisabled("Precio (S/.) ", product.precio.toString()),
+                    CustomInputs.customTextFieldFormDisabled("Precio (S/.) ", (product.precio ?? 0 ).toString()),
                     SizedBox(height: 20,),
                      CustomInputs.customTextFieldForm((value) => cantidad = value, "Cantidad", "Ingrese la cantidad"),
                   ],
