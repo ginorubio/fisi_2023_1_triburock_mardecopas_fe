@@ -11,7 +11,7 @@ class ProductsProvider extends ChangeNotifier {
    getProductsEnabled() async {
     
     try{
-      final resp = await ServiceApi.httpGet('/productos/');
+      final resp = await ServiceApi.httpGet('ux-gestion-productos/sam/servicio-al-cliente/v1/obtener-productos-habilitados');
       final productsResp = ProductsResponse.fromMap(resp);
 
       if (productsResp.data != null){
@@ -32,7 +32,7 @@ class ProductsProvider extends ChangeNotifier {
   getProductsDisabled() async {
     
     try{
-      final resp = await ServiceApi.httpGet('/productos/inhabilitados');
+      final resp = await ServiceApi.httpGet('ux-gestion-productos/sam/servicio-al-cliente/v1/obtener-productos-deshabilitados');
         final productsResp = ProductsResponse.fromMap(resp);
 
         if (productsResp.data != null){
@@ -54,7 +54,7 @@ class ProductsProvider extends ChangeNotifier {
     getProductsLowStock() async {
     
     try{
-      final resp = await ServiceApi.httpGet('/productos/stockminimo');
+      final resp = await ServiceApi.httpGet('ux-gestion-productos/sam/servicio-al-cliente/v1/obtener-productos-stock-mínimo');
         final productsResp = ProductsResponse.fromMap(resp);
 
         if (productsResp.data != null){
@@ -76,7 +76,7 @@ class ProductsProvider extends ChangeNotifier {
 getProductsForCode(String codigo) async {
     
     try{
-      final resp = await ServiceApi.httpGet('/productos/read/$codigo');
+      final resp = await ServiceApi.httpGet('ux-gestion-productos/sam/servicio-al-cliente/v1/obtener-productos/por-codigo/$codigo');
         final productsResp = ProductsResponse.fromMap(resp);
 
         if (productsResp.data != null){
@@ -114,7 +114,7 @@ getProductsForCode(String codigo) async {
     
     try {
       print('Request Create Product:  ----> ${data.toString()}');
-      final json = await ServiceApi.post('/productos/', data );
+      final json = await ServiceApi.post('ux-gestion-productos/sam/servicio-al-cliente/v1/agregar-productos', data );
       final productsResp= ProductsResponse.fromMap(json);
 
       if (productsResp.data != null){
@@ -136,7 +136,7 @@ getProductsForCode(String codigo) async {
 
     try {
 
-      final json =await ServiceApi.put('/productos/habilitar/$id', {} );
+      final json =await ServiceApi.put('ux-gestion-productos/sam/servicio-al-cliente/v1/dar-alta-productos/$id', {} );
       final productsResp= ProductsResponse.fromMap(json);
 
       if (productsResp.data != null){
@@ -161,7 +161,7 @@ getProductsForCode(String codigo) async {
 
     try {
 
-      final json = await ServiceApi.put('/productos/inhabilitar/$id', {} );
+      final json = await ServiceApi.put('ux-gestion-productos/sam/servicio-al-cliente/v1/dar-baja-productos/$id', {} );
       final productsResp= ProductsResponse.fromMap(json);
 
       if (productsResp.data != null){
@@ -192,7 +192,7 @@ getProductsForCode(String codigo) async {
     try {
       print('Request Update Product:  ----> ${data.toString()}');
 
-      final json = await ServiceApi.put('/productos/$id', data );
+      final json = await ServiceApi.put('ux-gestion-productos/sam/servicio-al-cliente/v1/actualizar-productos/$id', data );
       final productsResp= ProductsResponse.fromMap(json);
 
       if (productsResp.data != null){

@@ -14,7 +14,7 @@ class CategoryProvider extends ChangeNotifier {
 
   getCategoryEnabled() async {
     try {
-      final resp = await ServiceApi.httpGet('/categoria/read');
+      final resp = await ServiceApi.httpGet('ux-gestion-categorias/sam/servicio-al-cliente/v1/obtener-categorias-habilitadas');
       print(resp);
 
       final categoriesResp = CategoryConsultResponse.fromMap(resp);
@@ -39,7 +39,7 @@ class CategoryProvider extends ChangeNotifier {
     getCategoryDiseabled() async {
     
     try{
-      final resp = await ServiceApi.httpGet('/categoria/inhabilitados');
+      final resp = await ServiceApi.httpGet('ux-gestion-categorias/sam/servicio-al-cliente/v1/obtener-categorias-deshabilitadas');
       final categoriesResp = CategoryConsultResponse.fromMap(resp);
 
       if (categoriesResp.data != null){
@@ -70,7 +70,7 @@ class CategoryProvider extends ChangeNotifier {
     
     try {
       print('Request Create category:  ----> ${data.toString()}');
-      final json = await ServiceApi.post('/categoria/create', data );
+      final json = await ServiceApi.post('ux-gestion-categorias/sam/servicio-al-cliente/v1/agregar-categorias', data );
       final categoriesResp= CategoryConsultResponse.fromMap(json);
 
       if (categoriesResp.data != null){
@@ -92,7 +92,7 @@ class CategoryProvider extends ChangeNotifier {
 
     try {
 
-      final json =await ServiceApi.put('/categoria/habilitar/$id', {} );
+      final json =await ServiceApi.put('ux-gestion-categorias/sam/servicio-al-cliente/v1/dar-alta-categoria/$id', {} );
       final categoriesResp= CategoryConsultResponse.fromMap(json);
 
       if (categoriesResp.data != null){
@@ -116,7 +116,7 @@ class CategoryProvider extends ChangeNotifier {
 
     try {
 
-      final json = await ServiceApi.put('/categoria/inhabilitar/$id', {} );
+      final json = await ServiceApi.put('ux-gestion-categorias/sam/servicio-al-cliente/v1/dar-baja-categorias/$id', {} );
       final categoriesResp= CategoryConsultResponse.fromMap(json);
 
       if (categoriesResp.data != null){

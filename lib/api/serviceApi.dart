@@ -12,7 +12,7 @@ class ServiceApi {
   static void configureDio() {
 
     // Base del url
-    _dio.options.baseUrl = 'https://apimlogistnet.azure-api.net/api';
+    _dio.options.baseUrl = 'https://apimlogistnet.azure-api.net/';
 
 //'http://localhost:4000/api'
 //20.237.49.172:4000/

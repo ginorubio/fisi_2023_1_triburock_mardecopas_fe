@@ -28,7 +28,7 @@ class AuthProvider extends ChangeNotifier {
       'email': email,
       'password': password
     };
-    ServiceApi.post('/auth/signIn', data ).then(
+    ServiceApi.post('api/auth/signIn', data ).then(
       (json) {
         print(json);
         final authResponse = AuthResponse.fromMap(json);
