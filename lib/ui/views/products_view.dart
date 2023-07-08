@@ -91,8 +91,8 @@ class _ProductsViewState extends State<ProductsView> {
 
                 DataColumn(label: Text('Código')),
                 DataColumn(label: Text('Nombre')),
-                DataColumn(label: Text('Precio')),
-                DataColumn(label: Text('Costo')),
+                DataColumn(label: Text('Precio (S/.)')),
+                DataColumn(label: Text('Costo (S/.)')),
                 DataColumn(label: Text('Stock')),
                 DataColumn(label: Text('Stock Mínimo')),
                 DataColumn(label: Text('Categoría')),

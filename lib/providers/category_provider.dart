@@ -92,7 +92,7 @@ class CategoryProvider extends ChangeNotifier {
 
     try {
 
-      final json =await ServiceApi.put('ux-gestion-categorias/sam/servicio-al-cliente/v1/dar-alta-categoria/$id', {} );
+      final json =await ServiceApi.put('ux-gestion-categorias/sam/servicio-al-cliente/v1/dar-alta-categorias/$id', {} );
       final categoriesResp= CategoryConsultResponse.fromMap(json);
 
       if (categoriesResp.data != null){
@@ -136,4 +136,26 @@ class CategoryProvider extends ChangeNotifier {
 
   }
 
+  geCategoryForCode(String codigo) async {
+    
+    try{
+      final resp = await ServiceApi.httpGet('ux-gestion-categorias/sam/servicio-al-cliente/v1/obtener-categorias-por-codigo/$codigo');
+        final categoryResp = CategoryConsultResponse.fromMap(resp);
+
+        if (categoryResp.data != null){
+          this.categories = [...categoryResp.data!];
+          print( this.categories );
+        } else{
+          this.categories = [];
+          print(this.categories);
+        }
+        
+
+        notifyListeners();
+
+    } catch (e) {
+      print('Error al buscar la categoria');
+       NotificationsService.showSnackbarError('No se encontro la categoría de código: $codigo');
+    }
+  }
 }

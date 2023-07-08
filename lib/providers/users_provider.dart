@@ -11,7 +11,7 @@ class UsersProvider extends ChangeNotifier {
 
   getUsersEnabled() async {
     try {
-      final resp = await ServiceApi.httpGet('/users/');
+      final resp = await ServiceApi.httpGet('ux-gestion-usuarios/sam/servicio-al-cliente/v1/obtener-usuarios-habilitados');
       final usersResp = UsersResponse.fromMap(resp);
 
       if (usersResp.data != null) {
@@ -32,7 +32,7 @@ class UsersProvider extends ChangeNotifier {
 
   getUsersDisabled() async {
     try {
-      final resp = await ServiceApi.httpGet('/users/inhabilitados');
+      final resp = await ServiceApi.httpGet('ux-gestion-usuarios/sam/servicio-al-cliente/v1/obtener-usuarios-deshabilitados');
       final usersResp = UsersResponse.fromMap(resp);
 
       if (usersResp.data != null) {
@@ -66,7 +66,7 @@ class UsersProvider extends ChangeNotifier {
 
     try {
       print('Request Create User:  ----> ${data.toString()}');
-      final json = await ServiceApi.post('/users/create', data);
+      final json = await ServiceApi.post('ux-gestion-usuarios/sam/servicio-al-cliente/v1/agregar-usuarios', data);
       final usersResp = UsersResponse.fromMap(json);
 
       if (usersResp.data != null) {
@@ -83,7 +83,7 @@ class UsersProvider extends ChangeNotifier {
 
   Future enabledUser(int id) async {
     try {
-      final json = await ServiceApi.put('/users/habilitar/$id', {});
+      final json = await ServiceApi.put('ux-gestion-usuarios/sam/servicio-al-cliente/v1/dar-alta-usuarios/$id', {});
       final usersResp = UsersResponse.fromMap(json);
 
       if (usersResp.data != null) {
@@ -102,7 +102,7 @@ class UsersProvider extends ChangeNotifier {
 
   Future disabledUser(int id) async {
     try {
-      final json = await ServiceApi.put('/users/inhabilitar/$id', {});
+      final json = await ServiceApi.put('ux-gestion-usuarios/sam/servicio-al-cliente/v1/dar-baja-usuarios/$id', {});
       final usersResp = UsersResponse.fromMap(json);
 
       if (usersResp.data != null) {
@@ -133,7 +133,7 @@ class UsersProvider extends ChangeNotifier {
     try {
       print('Request Update User:  ----> ${data.toString()}');
 
-      final json = await ServiceApi.put('/users/update/$id', data);
+      final json = await ServiceApi.put('ux-gestion-usuarios/sam/servicio-al-cliente/v1/actualizar-usuarios/$id', data);
       final usersResp = UsersResponse.fromMap(json);
 
       if (usersResp.data != null) {

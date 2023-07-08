@@ -38,6 +38,7 @@ class _RegisterProductsModalState extends State<RegisterProductsModal> {
   String categoria = "";
   String dropdownValue = "unidades";
   String dropdownValueCategory = "";
+  int index = 0;
   @override
   void initState() {
     super.initState();
@@ -49,11 +50,11 @@ class _RegisterProductsModalState extends State<RegisterProductsModal> {
   Widget build(BuildContext context) {
     final productProvider =  Provider.of<ProductsProvider>(context, listen: false);
     final categories = Provider.of<CategoryProvider>(context).categories;
-    dropdownValueCategory = (categories.isEmpty) ? "" :categories[0].nombre ?? "";
+    dropdownValueCategory = (categories.isEmpty) ? "" :categories[index].nombre ?? "";
     return Container(
       padding: EdgeInsets.all(0),
       
-      width: 410, //
+      width: 500, //
       decoration: buildBoxDecoration(),
       child: Column(
         
@@ -89,7 +90,7 @@ class _RegisterProductsModalState extends State<RegisterProductsModal> {
                       height: 20,
                     ),
                     CustomInputs.customTextFieldForm(
-                        (value) => precio = value, "Precio (S/.", " Ingrese el precio "),
+                        (value) => precio = value, "Precio (S/.)", " Ingrese el precio "),
                     SizedBox(
                       height: 20,
                     ),
@@ -167,6 +168,9 @@ class _RegisterProductsModalState extends State<RegisterProductsModal> {
 
                           onChanged: (newValue)  {
                               setState(()  {
+                                  
+                                  final int indexFinal = categories.indexWhere((element) => element.nombre == newValue);
+                                  this.index = indexFinal;
                                   dropdownValueCategory = newValue ?? "";
                                 });
                             
@@ -201,12 +205,12 @@ class _RegisterProductsModalState extends State<RegisterProductsModal> {
                         NotificationsService.showSnackbarError('Falta ingresar datos o los ingresados no son correctos');
                       }else{
                         try {
-                          Category category = categories.firstWhere((element) => element.nombre == dropdownValueCategory);
+                          final int category_id = categories[this.index].id ?? 0;
                           double costo = double.parse(this.costo);
                           double precio = double.parse(this.precio);
                           int stock = int.parse(this.stock);
                           int stock_min = int.parse(this.stockMin);
-                          await productProvider.newProduct(nombre, category.id ?? 0, codigo, dropdownValue, costo, descripcion, precio, stock, stock_min);
+                          await productProvider.newProduct(nombre, category_id , codigo, dropdownValue, costo, descripcion, precio, stock, stock_min);
 
                           NotificationsService.showSnackbar('${nombre}, Se ha registrado con exito !');
                           Navigator.of(context).pop();

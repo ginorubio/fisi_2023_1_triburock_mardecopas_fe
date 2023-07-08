@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../design/custom_colors.dart';
+import '../inputs/custom_form_textfield.dart';
 
 class CategoryView extends StatefulWidget {
 
@@ -38,7 +39,7 @@ class _CategoryViewState extends State<CategoryView> {
   Widget build(BuildContext context) {
   final categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
   final categories = Provider.of<CategoryProvider>(context).categories;
-  
+  String searchValue = "";
 
     return Container(
       color: Colors.grey,
@@ -52,9 +53,17 @@ class _CategoryViewState extends State<CategoryView> {
             child: Row(
               children: [
                 SizedBox(width: 40),
-                SearchText(),
+                CustomInputs.customTextFieldFormSearch((value) => searchValue = value,  "buscar por código"),
                 SizedBox(width: 15),
-                CustomFlatButton(onPressed: () => {}, text: "Buscar" , color: Colors.white,colorText: Colors.black),
+                CustomFlatButton(
+                  onPressed: () async {
+
+                       await categoryProvider.geCategoryForCode(searchValue);
+                    },
+                 text: "Buscar" ,
+                  color: Colors.white,
+                  colorText: Colors.black
+                  ),
 
                 Spacer(),
                 CustomFlatButton(onPressed: () {
