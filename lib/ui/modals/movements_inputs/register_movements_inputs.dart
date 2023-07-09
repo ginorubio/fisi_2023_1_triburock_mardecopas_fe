@@ -1,7 +1,6 @@
 import 'package:almacen_web_fe/datatables/product_item_datasource.dart';
 import 'package:almacen_web_fe/models/movements_outputs.dart';
 import 'package:almacen_web_fe/providers/movements_inputs_provider.dart';
-import 'package:almacen_web_fe/providers/movements_outputs_provider.dart';
 import 'package:almacen_web_fe/providers/product_item_provider.dart';
 import 'package:almacen_web_fe/ui/buttons/custom_flatButton.dart';
 import 'package:almacen_web_fe/ui/design/custom_colors.dart';
@@ -11,10 +10,9 @@ import 'package:almacen_web_fe/ui/labels/custom_labels.dart';
 import 'package:almacen_web_fe/ui/modals/products/register_product_item_input.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../datatables/movements_outputs_datasoource.dart';
 import '../../../services/notifications_service.dart';
 import '../../cards/white_card.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class RegisterMovementsModal extends StatefulWidget {
   
@@ -33,7 +31,7 @@ class _RegisterMovementsModalState extends State<RegisterMovementsModal> {
   String  orden_compra = "";
   String fecha = "";
   String proveedor = "";
-
+  DateTime selectedDate = DateTime.now();
   @override
   void initState() {
     super.initState();
@@ -98,10 +96,32 @@ class _RegisterMovementsModalState extends State<RegisterMovementsModal> {
                 child: Column(
 
                   children: [
-                    CustomInputs.customTextFieldForm((value) => fecha = value, "Fecha", "aaaa-mm-dd"),
+                    Row(
+                      children: [
+                        Text('Fecha : ${selectedDate.year}-${selectedDate.month}-${selectedDate.day}'),
+                        IconButton(onPressed: ()  {
+                          DatePicker.showDatePicker(
+                            
+                            context,
+                            showTitleActions: true,
+                            minTime: DateTime(2000),
+                            maxTime: DateTime(2030),
+                            onConfirm: (date) {
+                              setState(() {
+                                selectedDate = date;
+                              });
+                            },
+                            currentTime: selectedDate,
+                            locale: LocaleType.es,
+                          );
+                        }
+                        , icon: Icon(Icons.calendar_today))
+                      ],
+                    ),
+                    //CustomInputs.customTextFieldForm((value) => fecha = value, "Fecha", "aaaa-mm-dd"),
                     SizedBox(height: 20,),
-                     CustomInputs.customTextFieldForm((value) => proveedor = value, "Proveedor", "Empresa ..."),
-                     Row(
+                    CustomInputs.customTextFieldForm((value) => proveedor = value, "Proveedor", "Empresa ..."),
+                    Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Container(
@@ -111,12 +131,12 @@ class _RegisterMovementsModalState extends State<RegisterMovementsModal> {
                           Container(
                             padding: EdgeInsets.only( left: 20, bottom: 20, top: 20),
                             child: CustomFlatButton(onPressed: () async {
-                                if (codigo.isEmpty || orden_compra.isEmpty || proveedor.isEmpty || fecha.isEmpty || productsItemInputs.isEmpty) {
+                                if (codigo.isEmpty || orden_compra.isEmpty || proveedor.isEmpty || productsItemInputs.isEmpty) {
                                   NotificationsService.showSnackbarError('Falta ingresar datos o los ingresados no son correctos');
                                 }else{
                                   try {
-                                    
-                                    await movementsInputsProvider.newMovementInput(codigo, orden_compra, fecha, proveedor, productsItemInputs);
+                                    final fechaResult = "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}";
+                                    await movementsInputsProvider.newMovementInput(codigo, orden_compra, fechaResult, proveedor, productsItemInputs);
                                     NotificationsService.showSnackbar('El movimiento ${codigo}, Se ha registrado con exito !');
                                     Navigator.of(context).pop();
 

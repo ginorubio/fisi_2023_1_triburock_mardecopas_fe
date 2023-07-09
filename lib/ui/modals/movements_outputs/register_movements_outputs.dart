@@ -11,6 +11,7 @@ import '../../cards/white_card.dart';
 import '../../design/custom_colors.dart';
 import '../../inputs/custom_form_textfield.dart';
 import '../../labels/custom_labels.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class RegisterMovementsOutputs extends StatefulWidget {
    RegisterMovementsOutputs({
@@ -29,7 +30,7 @@ class _RegisterMovementsOutputsState extends State<RegisterMovementsOutputs> {
   String  factura = "";
   String fecha = "";
   String cliente = "";
-
+  DateTime selectedDate = DateTime.now();
   @override
   void initState() {
     super.initState();
@@ -94,7 +95,29 @@ class _RegisterMovementsOutputsState extends State<RegisterMovementsOutputs> {
                 child: Column(
 
                   children: [
-                    CustomInputs.customTextFieldForm((value) => fecha = value, "Fecha", "AAAA-MM-dd"),
+                     Row(
+                      children: [
+                        Text('Fecha : ${selectedDate.year}-${selectedDate.month}-${selectedDate.day}'),
+                        IconButton(onPressed: ()  {
+                          DatePicker.showDatePicker(
+                            
+                            context,
+                            showTitleActions: true,
+                            minTime: DateTime(2000),
+                            maxTime: DateTime(2030),
+                            onConfirm: (date) {
+                              setState(() {
+                                selectedDate = date;
+                              });
+                            },
+                            currentTime: selectedDate,
+                            locale: LocaleType.es,
+                          );
+                        }
+                        , icon: Icon(Icons.calendar_today))
+                      ],
+                    ),
+                    //CustomInputs.customTextFieldForm((value) => fecha = value, "Fecha", "AAAA-MM-dd"),
                     SizedBox(height: 20,),
                      CustomInputs.customTextFieldForm((value) => cliente = value, "Cliente", "Ingrese su nombre"),
                      Row(
@@ -107,12 +130,12 @@ class _RegisterMovementsOutputsState extends State<RegisterMovementsOutputs> {
                           Container(
                             padding: EdgeInsets.only( left: 20, bottom: 20, top: 20),
                             child: CustomFlatButton(onPressed: () async {
-                                if (codigo.isEmpty || factura.isEmpty || cliente.isEmpty || fecha.isEmpty || productsItemOutputs.isEmpty ) {
+                                if (codigo.isEmpty || factura.isEmpty || cliente.isEmpty || productsItemOutputs.isEmpty ) {
                                   NotificationsService.showSnackbarError('Falta ingresar datos o los ingresados no son correctos');
                                 }else{
                                   try {
-                                    
-                                    await movementsOutputProvider.newMovementOutput(codigo, factura, fecha, cliente, productsItemOutputs);
+                                    final fechaResult = "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}";
+                                    await movementsOutputProvider.newMovementOutput(codigo, factura, fechaResult, cliente, productsItemOutputs);
                                     NotificationsService.showSnackbar('El movimiento ${codigo}, Se ha registrado con exito !');
                                     Navigator.of(context).pop();
 

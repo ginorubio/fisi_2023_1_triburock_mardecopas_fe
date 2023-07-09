@@ -38,7 +38,7 @@ dependencies:
   email_validator: ^2.0.1
   provider: ^5.0.0
   shared_preferences: ^2.0.15
-
+  flutter_datetime_picker:
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:

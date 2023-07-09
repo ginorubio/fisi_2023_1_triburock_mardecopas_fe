@@ -49,14 +49,14 @@ class Sidebar extends StatelessWidget {
           ),
           MenuItemCustom(
             text: 'Movimientos Salida',
-            icon: Icons.report,
+            icon: Icons.keyboard_double_arrow_right,
             onPressed: () => navigateTo(Flurorouter.movimientosRoute),
             isActive:
                 sideMenuProvider.currentPage == Flurorouter.movimientosRoute,
           ),
           MenuItemCustom(
-            text: 'Movimientos Ingresos',
-            icon: Icons.repeat_one_on_sharp,
+            text: 'Movimientos Entrada',
+            icon: Icons.keyboard_double_arrow_left_sharp,
             onPressed: () => navigateTo(Flurorouter.movimientosInputsRoute),
             isActive: sideMenuProvider.currentPage ==
                 Flurorouter.movimientosInputsRoute,

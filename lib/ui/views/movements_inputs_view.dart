@@ -9,7 +9,6 @@ import 'package:almacen_web_fe/ui/cards/white_card.dart';
 import 'package:almacen_web_fe/ui/design/custom_decoration.dart';
 import 'package:almacen_web_fe/ui/modals/movements_inputs/register_movements_inputs.dart';
 import 'package:almacen_web_fe/ui/shared/navbar.dart';
-import 'package:almacen_web_fe/ui/shared/widgets/search_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -145,4 +144,7 @@ class _MovemenentsInputsViewState extends State<MovemenentsInputsView> {
       ),
     );
   }
+
+
+  
 }
