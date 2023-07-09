@@ -13,8 +13,7 @@ class HomeView extends StatelessWidget {
           Navbar(text: "Inicio"),
 
           Container(
-            child: Image.network(
-              'https://capsa2in1.com/wp-content/uploads/2022/05/4-scaled.jpg',
+            child: Image.asset("home_img.jpg",
             fit: BoxFit.cover, // Ajusta la imagen al tamaño del contenedor
             ),
           )

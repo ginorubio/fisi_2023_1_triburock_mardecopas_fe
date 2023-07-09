@@ -89,12 +89,12 @@ class _RegisterProductsModalState extends State<RegisterProductsModal> {
                     SizedBox(
                       height: 20,
                     ),
-                    CustomInputs.customTextFieldForm(
+                    CustomInputs.customTextFieldFormDouble(
                         (value) => precio = value, "Precio (S/.)", " Ingrese el precio "),
                     SizedBox(
                       height: 20,
                     ),
-                    CustomInputs.customTextFieldForm(
+                    CustomInputs.customTextFieldFormDouble(
                         (value) => costo = value, "Costo (S/.)", "Ingrese el costo"),
                     SizedBox(
                       height: 20,
@@ -132,12 +132,12 @@ class _RegisterProductsModalState extends State<RegisterProductsModal> {
                         ),
                       ],
                     ),
-                    CustomInputs.customTextFieldForm(
+                    CustomInputs.customTextFieldFormNumber(
                         (value) => stock = value, "Stock ", " 0"),
                     SizedBox(
                       height: 20,
                     ),
-                    CustomInputs.customTextFieldForm(
+                    CustomInputs.customTextFieldFormNumber(
                         (value) => stockMin = value, "Stock Mínimo", " 0"),
                     SizedBox(
                       height: 20,
@@ -201,7 +201,7 @@ class _RegisterProductsModalState extends State<RegisterProductsModal> {
                   child: CustomFlatButton(
                     onPressed: () async {
 
-                      if (codigo.isEmpty || stock.isEmpty ) {
+                      if (  codigo.isEmpty || nombre.isEmpty || stock.isEmpty || precio.isEmpty || costo.isEmpty || stock.isEmpty  ) {
                         NotificationsService.showSnackbarError('Falta ingresar datos o los ingresados no son correctos');
                       }else{
                         try {

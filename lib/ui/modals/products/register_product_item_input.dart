@@ -25,13 +25,13 @@ class RegisterProducItemInput extends StatefulWidget {
 }
 
 class _RegisterProducItemInputState extends State<RegisterProducItemInput> {
-  String codigo_product = ' ';
-  String   name_product = " ";
-  String description = ' ';
-  String   categoria = " ";
+  String codigo_product = '';
+  String   name_product = "";
+  String description = '';
+  String   categoria = "";
   String stock = '0';
   String   precio = "0.0";
-  String   cantidad = "0";
+  String   cantidad = "";
   Products product = Products();
   @override
   void initState() {
@@ -92,20 +92,22 @@ class _RegisterProducItemInputState extends State<RegisterProducItemInput> {
                     Container(
                       padding: EdgeInsets.only(  bottom: 20),
                       child: CustomFlatButton(onPressed: () async{
-                          try{
-                            final productValue = await productProvider.getProductItemForCode(codigo_product);
-                             setState(()  {
-                                this.product = productValue;
-                              });
-                          }catch (e){
-                            NotificationsService.showSnackbarError('No se encontro el producto de código: $codigo_product');
-                            setState(()  {
-                                this.product = Products();
-                              });
-                          }
-                          
-                         
-                          
+                         if ( codigo_product.isEmpty  ) {
+                          NotificationsService.showSnackbarError('Ingrese el código del producto para realizar la busqueda');
+
+                         }else{
+                            try{
+                              final productValue = await productProvider.getProductItemForCode(codigo_product);
+                              setState(()  {
+                                  this.product = productValue;
+                                });
+                            }catch (e){
+                              NotificationsService.showSnackbarError('No se encontro el producto de código: $codigo_product');
+                              setState(()  {
+                                  this.product = Products();
+                                });
+                            }
+                         }
                         },
                         text: "Buscar", color: CustomColor.primaryColor(), colorText: Colors.white,
                         )
@@ -114,7 +116,7 @@ class _RegisterProducItemInputState extends State<RegisterProducItemInput> {
                     SizedBox(height: 20,),
                     CustomInputs.customTextFieldFormDisabled("Precio (S/.) ", (product.precio ?? 0).toString()),
                     SizedBox(height: 20,),
-                     CustomInputs.customTextFieldForm((value) => cantidad = value, "Cantidad", "Ingrese la cantidad"),
+                     CustomInputs.customTextFieldFormNumber((value) => cantidad = value, "Cantidad", "Ingrese la cantidad"),
                   ],
                 ),
               )
@@ -130,19 +132,24 @@ class _RegisterProducItemInputState extends State<RegisterProducItemInput> {
               Container(
                 padding: EdgeInsets.only( left: 20, bottom: 20, top: 40, right: 20),
                 child: CustomFlatButton(onPressed: () {
-                    final cantidadParse = int.parse(cantidad);
-                    final productItem = ProductItem(
-                      codigo_product: codigo_product, 
-                      name_product: product.nombre, 
-                      description: product.descripcion, 
-                      categoria: product.categoria,
-                      stock: product.stock ?? 0,
-                      precio: product.precio ?? 0.0,
-                      cantidad: int.parse(cantidad) 
 
-                       );
-                      productsItemProvider.addItemMovementInput(productItem);
-                      Navigator.of(context).pop();
+                    if ( codigo_product.isEmpty || cantidad.isEmpty || (product.nombre ?? "").isEmpty  ) {
+                          NotificationsService.showSnackbarError('Los datos estan incompletos');
+                    }else {
+                      final cantidadParse = int.parse(cantidad);
+                      final productItem = ProductItem(
+                        codigo_product: codigo_product, 
+                        name_product: product.nombre, 
+                        description: product.descripcion, 
+                        categoria: product.categoria,
+                        stock: product.stock ?? 0,
+                        precio: product.precio ?? 0.0,
+                        cantidad: int.parse(cantidad) 
+                        );
+                        productsItemProvider.addItemMovementInput(productItem);
+                        Navigator.of(context).pop();
+                    }
+                    
                   },
                   text: "Agregar", color: Colors.green, colorText: Colors.white,
                   )

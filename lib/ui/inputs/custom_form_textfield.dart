@@ -2,6 +2,7 @@
 
 import 'package:almacen_web_fe/ui/inputs/custom_inputs.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../design/custom_colors.dart';
 class CustomInputs {
@@ -40,6 +41,52 @@ class CustomInputs {
         height: 32,
         child: TextFormField(
           obscureText: isPassword ,
+          onChanged: ( value ) => onChanged(value),
+          decoration: CustomInputsDecoration.formInputDecoration(hint: hintText),
+          style: TextStyle( color: CustomColor.primaryColor() ),
+        ),
+      ),
+        
+      ],  
+    );
+  }
+
+  static Widget customTextFieldFormNumber(Function onChanged, String labelText, String hintText, {isPassword = false}) {
+    return Row(
+      children: [
+        Text(labelText,
+        style: TextStyle(color: CustomColor.primaryColor())
+        ),
+        Spacer(),
+        Container(
+        width: 200,
+        height: 32,
+        child: TextFormField(
+          obscureText: isPassword ,
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          onChanged: ( value ) => onChanged(value),
+          decoration: CustomInputsDecoration.formInputDecoration(hint: hintText),
+          style: TextStyle( color: CustomColor.primaryColor() ),
+        ),
+      ),
+        
+      ],  
+    );
+  }
+static Widget customTextFieldFormDouble(Function onChanged, String labelText, String hintText, {isPassword = false}) {
+    return Row(
+      children: [
+        Text(labelText,
+        style: TextStyle(color: CustomColor.primaryColor())
+        ),
+        Spacer(),
+        Container(
+        width: 200,
+        height: 32,
+        child: TextFormField(
+          obscureText: isPassword ,
+          inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,4}'))],
           onChanged: ( value ) => onChanged(value),
           decoration: CustomInputsDecoration.formInputDecoration(hint: hintText),
           style: TextStyle( color: CustomColor.primaryColor() ),

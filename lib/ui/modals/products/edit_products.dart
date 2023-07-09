@@ -77,12 +77,12 @@ class _EditProductsModalState extends State<EditProductsModal> {
                     SizedBox(
                       height: 20,
                     ),
-                    CustomInputs.customTextFieldForm(
+                    CustomInputs.customTextFieldFormDouble(
                         (value) => precio = value, "Precio", widget.products?.precio.toString() ?? ""),
                     SizedBox(
                       height: 20,
                     ),
-                    CustomInputs.customTextFieldForm(
+                    CustomInputs.customTextFieldFormNumber(
                         (value) => stock_min = value, "Stock mínimo", widget.products?.stock_min.toString() ?? ""),
                     SizedBox(
                       height: 20,
@@ -121,7 +121,11 @@ class _EditProductsModalState extends State<EditProductsModal> {
                       EdgeInsets.only(left: 40, right: 40, bottom: 40, top: 40),
                   child: CustomFlatButton(
                     onPressed: () async {
-                         try {
+
+                      if ( descripcion.isEmpty || precio.isEmpty || stock_min.isEmpty   ) {
+                        NotificationsService.showSnackbarError('Falta ingresar datos o los ingresados no son correctos');
+                      }else{
+                          try {
                             
                             await productProvider.updateProduct(widget.products?.id ?? 0, descripcion,
                             double.parse(precio), int.parse(stock_min));
@@ -132,6 +136,8 @@ class _EditProductsModalState extends State<EditProductsModal> {
                             Navigator.of(context).pop();
                             NotificationsService.showSnackbarError('No se pudo actualizar el producto');
                           }
+                      }
+                         
                     },
                     text: "Guardar",
                     color: Colors.green,
