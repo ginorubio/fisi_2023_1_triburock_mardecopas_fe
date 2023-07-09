@@ -1,3 +1,5 @@
+import 'package:almacen_web_fe/services/notifications_service.dart';
+import 'package:almacen_web_fe/ui/inputs/custom_form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../datatables/users_datasource.dart';
@@ -28,6 +30,7 @@ class _UsersViewState extends State<UsersView> {
   Widget build(BuildContext context) {
     final users = Provider.of<UsersProvider>(context).users;
     final userProvider = Provider.of<UsersProvider>(context, listen: false);
+    String searchValue = "";
     return Container(
       color: Colors.grey,
       child: ListView(
@@ -40,10 +43,19 @@ class _UsersViewState extends State<UsersView> {
             child: Row(
               children: [
                 SizedBox(width: 40),
-                SearchText(),
+                CustomInputs.customTextFieldFormSearch((value) => searchValue = value,  "buscar por Documento de identidad"),
                 SizedBox(width: 15),
                 CustomFlatButton(
-                    onPressed: () => {},
+                    onPressed: () async {
+
+                    if (searchValue.isEmpty) {
+                      NotificationsService.showSnackbarError("Ingrese el documento del usuario para realizar la búsqueda");
+                    }else{
+                        await userProvider.getUserForDNI(searchValue);
+                    }
+                      
+                       
+                    },
                     text: "Buscar",
                     color: Colors.white,
                     colorText: Colors.black),

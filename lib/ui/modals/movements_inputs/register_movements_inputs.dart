@@ -111,7 +111,7 @@ class _RegisterMovementsModalState extends State<RegisterMovementsModal> {
                           Container(
                             padding: EdgeInsets.only( left: 20, bottom: 20, top: 20),
                             child: CustomFlatButton(onPressed: () async {
-                                if (codigo.isEmpty || orden_compra.isEmpty || proveedor.isEmpty ) {
+                                if (codigo.isEmpty || orden_compra.isEmpty || proveedor.isEmpty || fecha.isEmpty || productsItemInputs.isEmpty) {
                                   NotificationsService.showSnackbarError('Falta ingresar datos o los ingresados no son correctos');
                                 }else{
                                   try {

@@ -47,8 +47,12 @@ class _ProductsViewState extends State<ProductsView> {
                 SizedBox(width: 15),
                 CustomFlatButton(
                     onPressed: () async {
-
-                       await productProvider.getProductsForCode(searchValue);
+                      if (searchValue.isEmpty) {
+                        NotificationsService.showSnackbarError("Ingrese el código del Producto para realizar la búsqueda");
+                      }else{
+                        await productProvider.getProductsForCode(searchValue);
+                      }
+                       
                     },
                     text: "Buscar",
                     color: Colors.white,

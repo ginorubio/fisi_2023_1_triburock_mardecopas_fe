@@ -171,19 +171,25 @@ class _RegisterUsersModalState extends State<RegisterUsersModal> {
                       EdgeInsets.only(left: 40, right: 40, bottom: 40, top: 40),
                   child: CustomFlatButton(
                     onPressed: () async {
-                      try {
-                         Rol rol = rols.firstWhere((element) => element.name == dropdownValueRol);
-                        
 
-                        await userProvider.newUser(rol.id_rol ?? 120, nombreUsuario, correo, direcion, telefono, contrasena, dni);
-                        NotificationsService.showSnackbar(
-                            '${widget.users?.username ?? ""} Actualizado!');
-                        Navigator.of(context).pop();
-                      } catch (e) {
-                        Navigator.of(context).pop();
-                        NotificationsService.showSnackbarError(
-                            'No se pudo actualizar el usuario');
+                      if ( nombreUsuario.isEmpty || correo.isEmpty || contrasena.isEmpty || dni.isEmpty){
+                        NotificationsService.showSnackbarError("Faltan ingresar datos o los ingresados son incorrectos");
+                        }else{
+                          try {
+                          Rol rol = rols.firstWhere((element) => element.name == dropdownValueRol);
+                          
+
+                          await userProvider.newUser(rol.id_rol ?? 120, nombreUsuario, correo, direcion, telefono, contrasena, dni);
+                          NotificationsService.showSnackbar(
+                              '${widget.users?.username ?? ""} Actualizado!');
+                          Navigator.of(context).pop();
+                        } catch (e) {
+                          Navigator.of(context).pop();
+                          NotificationsService.showSnackbarError(
+                              'No se pudo actualizar el usuario');
+                        }
                       }
+                      
                     },
                     text: "Guardar",
                     color: Colors.green,

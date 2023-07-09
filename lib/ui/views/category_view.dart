@@ -3,6 +3,7 @@
  
 import 'package:almacen_web_fe/datatables/category_datasource.dart';
 import 'package:almacen_web_fe/providers/category_provider.dart';
+import 'package:almacen_web_fe/services/notifications_service.dart';
 import 'package:almacen_web_fe/ui/buttons/custom_flatButton.dart';
 import 'package:almacen_web_fe/ui/cards/white_card.dart';
 import 'package:almacen_web_fe/ui/design/custom_decoration.dart';
@@ -58,7 +59,13 @@ class _CategoryViewState extends State<CategoryView> {
                 CustomFlatButton(
                   onPressed: () async {
 
-                       await categoryProvider.geCategoryForCode(searchValue);
+                    if (searchValue.isEmpty) {
+                      NotificationsService.showSnackbarError("Ingrese el código de la Categoría para realizar la búsqueda");
+                    }else{
+                        await categoryProvider.geCategoryForCode(searchValue);
+                    }
+                      
+                       
                     },
                  text: "Buscar" ,
                   color: Colors.white,

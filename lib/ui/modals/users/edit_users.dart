@@ -77,8 +77,8 @@ List<Rol> rols = [
                     SizedBox(
                       height: 20,
                     ),
-                     CustomInputs.customTextFieldFormDisabled(
-                        "Correo", widget.users?.email ?? ""),
+                     CustomInputs.customTextFieldForm(
+                        (value) => email = value, "Correo", ""),
                     SizedBox(
                       height: 20,
                     ),
@@ -152,25 +152,29 @@ List<Rol> rols = [
                       EdgeInsets.only(left: 40, right: 40, bottom: 40, top: 40),
                   child: CustomFlatButton(
                     onPressed: () async {
-                      try {
-                         Rol rol = rols.firstWhere((element) => element.name == dropdownValueRol);
-                        
-
-                        await userProvider.updateUser(
-                            widget.users?.id ?? 0,
-                            email,
-                            password,
-                            telefono,
-                            direccion,
-                            rol.id_rol ?? 120);
-                        NotificationsService.showSnackbar(
-                            '${widget.users?.username ?? ""} Actualizado!');
-                        Navigator.of(context).pop();
-                      } catch (e) {
-                        Navigator.of(context).pop();
-                        NotificationsService.showSnackbarError(
-                            'No se pudo actualizar el usuario');
+                      if (email.isEmpty || password.isEmpty || telefono.isEmpty || direccion.isEmpty) {
+                        NotificationsService.showSnackbarError("Faltan ingresar datos o los ingresados son incorrectos");
+                      }else{
+                          try {
+                            Rol rol = rols.firstWhere((element) => element.name == dropdownValueRol);
+                            await userProvider.updateUser(
+                                widget.users?.id ?? 0,
+                                email,
+                                password,
+                                telefono,
+                                direccion,
+                                rol.id_rol ?? 120);
+                            NotificationsService.showSnackbar(
+                                '${widget.users?.username ?? ""} Actualizado!');
+                            Navigator.of(context).pop();
+                        } catch (e) {
+                            Navigator.of(context).pop();
+                            NotificationsService.showSnackbarError(
+                                'No se pudo actualizar el usuario');
+                        }
                       }
+
+                      
                     },
                     text: "Guardar",
                     color: Colors.green,

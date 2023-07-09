@@ -126,7 +126,7 @@ class UsersProvider extends ChangeNotifier {
       "password": password,
       "telefono": telefono,
       "direccion": direccion,
-      "rol": telefono,
+      "rol": rol,
 
     };
 
@@ -147,6 +147,29 @@ class UsersProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       throw 'Error al actualizar el usuario';
+    }
+  }
+
+   getUserForDNI(String dni) async {
+    
+    try{
+      final resp = await ServiceApi.httpGet('ux-gestion-usuarios/sam/servicio-al-cliente/v1/obtener-usuarios-por-dni/$dni');
+        final usersResp = UsersResponse.fromMap(resp);
+
+        if (usersResp.data != null){
+          this.users = [...usersResp.data!];
+          print( this.users );
+        } else{
+          this.users = [];
+          print(this.users);
+        }
+
+      notifyListeners();
+
+
+    } catch (e) {
+      print('Error al buscar la usuario');
+       NotificationsService.showSnackbarError('No se encontro el usuario con el DNI: $dni');
     }
   }
 }

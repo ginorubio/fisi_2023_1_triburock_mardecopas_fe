@@ -1,6 +1,7 @@
 
 import 'package:almacen_web_fe/datatables/movements_outputs_datasoource.dart';
 import 'package:almacen_web_fe/providers/movements_outputs_provider.dart';
+import 'package:almacen_web_fe/services/notifications_service.dart';
 import 'package:almacen_web_fe/ui/buttons/custom_flatButton.dart';
 import 'package:almacen_web_fe/ui/cards/white_card.dart';
 import 'package:almacen_web_fe/ui/design/custom_colors.dart';
@@ -56,7 +57,12 @@ class _MovemenentsOutputsViewState extends State<MovemenentsOutputsView> {
                 SizedBox(width: 15),
                 CustomFlatButton(
                   onPressed: () async {
-                     await movementsOutputsProvider.getMovementsOutputsForCode(searchValue);
+                     if (searchValue.isEmpty){
+                        NotificationsService.showSnackbarError("Ingrese el código del Movimiento para realizar la búsqueda");
+                      }else{
+                         await movementsOutputsProvider.getMovementsOutputsForCode(searchValue);
+                      }
+                    
                   }
                 , text: "Buscar" , color: Colors.white,colorText: Colors.black),
                 Spacer(),

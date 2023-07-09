@@ -107,7 +107,7 @@ class _RegisterMovementsOutputsState extends State<RegisterMovementsOutputs> {
                           Container(
                             padding: EdgeInsets.only( left: 20, bottom: 20, top: 20),
                             child: CustomFlatButton(onPressed: () async {
-                                if (codigo.isEmpty || factura.isEmpty || cliente.isEmpty ) {
+                                if (codigo.isEmpty || factura.isEmpty || cliente.isEmpty || fecha.isEmpty || productsItemOutputs.isEmpty ) {
                                   NotificationsService.showSnackbarError('Falta ingresar datos o los ingresados no son correctos');
                                 }else{
                                   try {
