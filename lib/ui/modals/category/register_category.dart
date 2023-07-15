@@ -48,7 +48,8 @@ class _RegisterCategoryModalState extends State<RegisterCategoryModal> {
       height: 350,
       width: 500, // 
       decoration: buildBoxDecoration(),
-      child: Column(
+      child: ListView(
+        physics: ClampingScrollPhysics(),
         children: [
           Container(
             color: Color(0xff493F60),

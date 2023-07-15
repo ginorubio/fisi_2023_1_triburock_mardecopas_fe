@@ -45,7 +45,8 @@ class _EditProductsModalState extends State<EditProductsModal> {
       height: 1200,
       width: 410, //
       decoration: buildBoxDecoration(),
-      child: Column(
+      child: ListView(
+        physics: ClampingScrollPhysics(),
         children: [
           Container(
             color: Color(0xff493F60),

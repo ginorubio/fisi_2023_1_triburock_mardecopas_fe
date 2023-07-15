@@ -20,6 +20,8 @@ class _ProductsViewState extends State<ProductsView> {
   int _rowsPerPage = PaginatedDataTable.defaultRowsPerPage;
   String dropdownValue = 'Habilitados';
 
+  final _scrollController = ScrollController();
+  final _scrollController2 = ScrollController();
   @override
   void initState() {
     super.initState();

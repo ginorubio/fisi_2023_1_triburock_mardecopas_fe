@@ -47,7 +47,8 @@ class _ShowProductsModalState extends State<ShowProductsModal> {
       height: 1200,
       width: 410, //
       decoration: buildBoxDecoration(),
-      child: Column(
+      child: ListView(
+        physics: ClampingScrollPhysics(),
         children: [
           Container(
             color: Color(0xff493F60),

@@ -49,7 +49,8 @@ class _RegisterMovementsModalState extends State<RegisterMovementsModal> {
       
       width: 800, // 
       decoration: buildBoxDecoration(),
-      child: Column(
+      child: ListView(
+        physics: ClampingScrollPhysics(),
         children: [
           Container(
             color: Color(0xff493F60),

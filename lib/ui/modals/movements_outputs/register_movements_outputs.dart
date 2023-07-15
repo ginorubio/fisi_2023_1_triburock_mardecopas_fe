@@ -48,7 +48,8 @@ class _RegisterMovementsOutputsState extends State<RegisterMovementsOutputs> {
       
       width: 800, // 
       decoration: buildBoxDecoration(),
-      child: Column(
+      child: ListView(
+        physics: ClampingScrollPhysics(),
         children: [
           Container(
             color: Color(0xff493F60),

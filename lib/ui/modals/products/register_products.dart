@@ -56,7 +56,8 @@ class _RegisterProductsModalState extends State<RegisterProductsModal> {
       
       width: 500, //
       decoration: buildBoxDecoration(),
-      child: Column(
+      child: ListView(
+        physics: ClampingScrollPhysics(),
         
         children: [
           Container(

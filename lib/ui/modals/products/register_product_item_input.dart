@@ -50,7 +50,8 @@ class _RegisterProducItemInputState extends State<RegisterProducItemInput> {
       height: 400,
       width: 800, // 
       decoration: buildBoxDecoration(),
-      child: Column(
+      child: ListView(
+        physics: ClampingScrollPhysics(),
         children: [
            Container(
             color: Color(0xff493F60),
