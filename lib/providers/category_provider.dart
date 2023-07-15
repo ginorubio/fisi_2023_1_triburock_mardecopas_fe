@@ -139,7 +139,7 @@ class CategoryProvider extends ChangeNotifier {
   geCategoryForCode(String codigo) async {
     
     try{
-      final resp = await ServiceApi.httpGet('ux-gestion-categorias/sam/servicio-al-cliente/v1/obtener-categorias-por-codigo/$codigo');
+      final resp = await ServiceApi.httpGet('ux-gestion-categorias/sam/servicio-al-cliente/v1/obtener-categorias/codigo/$codigo');
         final categoryResp = CategoryConsultResponse.fromMap(resp);
 
         if (categoryResp.data != null){

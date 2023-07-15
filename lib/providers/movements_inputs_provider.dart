@@ -17,7 +17,7 @@ class MovementsInputsProvider extends ChangeNotifier {
   getMovementsInputsEnabled() async {
 
     try{
-      final resp = await ServiceApi.httpGet('ux-gestion-movimientos/sam/servicio-al-cliente/v1/obtener-movimientos-entrada-aprobados');
+      final resp = await ServiceApi.httpGet('ux-gestion-movimientos/sam/servicio-al-cliente/v1/obtener-movimientos-entradas-aprobados');
         final movementsResp = MovementsInputsResponse.fromMap(resp);
 
         if (movementsResp.data != null){
@@ -42,7 +42,7 @@ class MovementsInputsProvider extends ChangeNotifier {
   getMovementsInputsDisabled() async {
 
     try{
-      final resp = await ServiceApi.httpGet('ux-gestion-movimientos/sam/servicio-al-cliente/v1/obtener-movimientos-entrada-anulados');
+      final resp = await ServiceApi.httpGet('ux-gestion-movimientos/sam/servicio-al-cliente/v1/obtener-movimientos-entradas-anulados');
         final movementsResp = MovementsInputsResponse.fromMap(resp);
 
         if (movementsResp.data != null){
@@ -66,7 +66,7 @@ class MovementsInputsProvider extends ChangeNotifier {
   getMovementsInputsForCode(String code) async {
 
     try{
-      final resp = await ServiceApi.httpGet('ux-gestion-movimientos/sam/servicio-al-cliente/v1/obtener-movimientos-entrada-por-codigo/$code');
+      final resp = await ServiceApi.httpGet('ux-gestion-movimientos/sam/servicio-al-cliente/v1/obtener-movimientos-entradas/$code');
         final movementsResp = MovementsInputsResponse.fromMap(resp);
 
         if (movementsResp.data != null){
@@ -102,7 +102,7 @@ Future newMovementInput( String codigo, String orden_compra, String fecha,
     
     try {
       print('Request Create Movements Inputs:  ----> ${data.toString()}');
-      final json = await ServiceApi.post('ux-gestion-movimientos/sam/servicio-al-cliente/v1/agregar-movimientos-entrada', data );
+      final json = await ServiceApi.post('ux-gestion-movimientos/sam/servicio-al-cliente/v1/agregar-movimientos-entradas', data );
       final movementsResp= MovementsInputsRegisterResponse.fromMap(json);
 
       if (movementsResp.movimiento != null){
@@ -124,7 +124,7 @@ Future newMovementInput( String codigo, String orden_compra, String fecha,
 
     try {
 
-      final json = await ServiceApi.put('ux-gestion-movimientos/sam/servicio-al-cliente/v1/anular-movimientos-entrada/$id', {} );
+      final json = await ServiceApi.put('ux-gestion-movimientos/sam/servicio-al-cliente/v1/anular-movimientos-entradas/$id', {} );
       final movementsResp= MovementsInputsDisabledResponse.fromMap(json);
 
       if (movementsResp.data != null){

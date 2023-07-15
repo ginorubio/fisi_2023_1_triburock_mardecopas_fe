@@ -33,6 +33,7 @@ class MovementsInputsDTS extends DataTableSource {
         DataCell( 
           Row(
             children: [
+              /*
               IconButton(
                 icon: Icon( Icons.download, color: CustomColor.infoColor().withOpacity(0.8) ),
                 onPressed: () async {
@@ -50,7 +51,7 @@ class MovementsInputsDTS extends DataTableSource {
                   }
                   
                 }
-              ),
+              ),*/
               (movementInput.estado == 'Aprobado')
               ? IconButton(
                 icon: Icon( Icons.cancel, color: Colors.red.withOpacity(0.8) ),

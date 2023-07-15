@@ -36,6 +36,7 @@ class MovementsDTS extends DataTableSource {
         DataCell( 
           Row(
             children: [
+              /*
                IconButton(
                  icon: Icon( Icons.download, color: CustomColor.infoColor().withOpacity(0.8) ),
                   onPressed: () async {
@@ -52,7 +53,7 @@ class MovementsDTS extends DataTableSource {
                       NotificationsService.showSnackbarError('No se pudo obtener el reporte de movimiento');
                   }
                  }
-               ),
+               ),*/
               (movementOutput.estado == 'Aprobado')
               ? IconButton(
                 icon: Icon( Icons.cancel, color: Colors.red.withOpacity(0.8) ),

@@ -15,8 +15,6 @@ class ServiceApi {
     _dio.options.baseUrl = 'https://apimlogistnet.azure-api.net/';
 
 //'http://localhost:4000/api'
-//20.237.49.172:4000/
-// 'https://36125cea-a715-48ea-a36d-d9de0888627c.mock.pstmn.io/api'
     // ''
     // Configurar Headers
     _dio.options.headers = {

@@ -76,7 +76,7 @@ class ProductsProvider extends ChangeNotifier {
 getProductsForCode(String codigo) async {
     
     try{
-      final resp = await ServiceApi.httpGet('ux-gestion-productos/sam/servicio-al-cliente/v1/obtener-productos/por-codigo/$codigo');
+      final resp = await ServiceApi.httpGet('ux-gestion-productos/sam/servicio-al-cliente/v1/obtener-productos/codigo/$codigo');
         final productsResp = ProductsResponse.fromMap(resp);
 
         if (productsResp.data != null){
@@ -220,7 +220,7 @@ getProductsForCode(String codigo) async {
    Future getProductItemForCode(String codigo) async  {
     
     try{
-      final resp = await ServiceApi.httpGet('ux-gestion-productos/sam/servicio-al-cliente/v1/obtener-productos/por-codigo/$codigo');
+      final resp = await ServiceApi.httpGet('ux-gestion-productos/sam/servicio-al-cliente/v1/obtener-productos/codigo/$codigo');
         final productsResp = ProductsResponse.fromMap(resp);
 
         if (productsResp.data != null && (productsResp.data?.length ?? 0) > 0 ){

@@ -153,7 +153,7 @@ class UsersProvider extends ChangeNotifier {
    getUserForDNI(String dni) async {
     
     try{
-      final resp = await ServiceApi.httpGet('ux-gestion-usuarios/sam/servicio-al-cliente/v1/obtener-usuarios-por-dni/$dni');
+      final resp = await ServiceApi.httpGet('ux-gestion-usuarios/sam/servicio-al-cliente/v1/obtener-usuarios/$dni');
         final usersResp = UsersResponse.fromMap(resp);
 
         if (usersResp.data != null){

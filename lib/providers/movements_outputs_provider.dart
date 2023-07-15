@@ -19,7 +19,7 @@ class MovementsOutputsProvider extends ChangeNotifier {
   getMovementsOutputsEnabled() async {
 
     try{
-      final resp = await ServiceApi.httpGet('ux-gestion-movimientos/sam/servicio-al-cliente/v1/obtener-movimientos-salida-aprobados');
+      final resp = await ServiceApi.httpGet('ux-gestion-movimientos/sam/servicio-al-cliente/v1/obtener-movimientos-salidas-aprobados');
         final movementsResp = MovementsOutputsResponse.fromMap(resp);
 
         if (movementsResp.data != null){
@@ -44,7 +44,7 @@ class MovementsOutputsProvider extends ChangeNotifier {
   getMovementsOutputsDisabled() async {
 
     try{
-      final resp = await ServiceApi.httpGet('ux-gestion-movimientos/sam/servicio-al-cliente/v1/obtener-movimientos-salida-anulados');
+      final resp = await ServiceApi.httpGet('ux-gestion-movimientos/sam/servicio-al-cliente/v1/obtener-movimientos-salidas-anulados');
         final movementsResp = MovementsOutputsResponse.fromMap(resp);
 
         if (movementsResp.data != null){
@@ -68,7 +68,7 @@ class MovementsOutputsProvider extends ChangeNotifier {
   getMovementsOutputsForCode(String code) async {
 
     try{
-      final resp = await ServiceApi.httpGet('ux-gestion-movimientos/sam/servicio-al-cliente/v1/obtener-movimientos-salida-por-codigo/$code');
+      final resp = await ServiceApi.httpGet('ux-gestion-movimientos/sam/servicio-al-cliente/v1/obtener-movimientos-salidas/$code');
         final movementsResp = MovementsOutputsResponse.fromMap(resp);
 
         if (movementsResp.data != null){
@@ -104,7 +104,7 @@ Future newMovementOutput( String codigo, String factura, String fecha,
     
     try {
       print('Request Create Movements Output:  ----> ${data.toString()}');
-      final json = await ServiceApi.post('ux-gestion-movimientos/sam/servicio-al-cliente/v1/agregar-movimientos-salida', data );
+      final json = await ServiceApi.post('ux-gestion-movimientos/sam/servicio-al-cliente/v1/agregar-movimientos-salidas', data );
       final movementsResp= MovementsOutputssRegisterResponse.fromMap(json);
 
       if (movementsResp.movimiento != null){
@@ -126,7 +126,7 @@ Future newMovementOutput( String codigo, String factura, String fecha,
 
     try {
 
-      final json = await ServiceApi.put('ux-gestion-movimientos/sam/servicio-al-cliente/v1/anular-movimientos-salida/$id', {} );
+      final json = await ServiceApi.put('ux-gestion-movimientos/sam/servicio-al-cliente/v1/anular-movimientos-salidas/$id', {} );
       final movementsResp= MovementsOutputssDisabledResponse.fromMap(json);
 
       if (movementsResp.data != null){
