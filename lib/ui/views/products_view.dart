@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:almacen_web_fe/ui/inputs/custom_form_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +12,7 @@ import '../design/custom_colors.dart';
 import '../design/custom_decoration.dart';
 import '../modals/products/register_products.dart';
 import '../shared/navbar.dart';
+import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 
 class ProductsView extends StatefulWidget {
   @override
@@ -91,64 +94,65 @@ class _ProductsViewState extends State<ProductsView> {
           ),
           Container(
             color: Colors.grey.shade300,
-            child: WhiteCard(
-                child: PaginatedDataTable(
-              columns: [
-
-                DataColumn(label: Text('Código')),
-                DataColumn(label: Text('Nombre')),
-                DataColumn(label: Text('Precio (S/.)')),
-                DataColumn(label: Text('Costo (S/.)')),
-                DataColumn(label: Text('Stock')),
-                DataColumn(label: Text('Stock Mínimo')),
-                DataColumn(label: Text('Categoría')),
-                DataColumn(label: Text('Descripción')),
-                DataColumn(label: Text('Acciones'))
-              ],
-              source: ProductsDTS(products, context),
-              header: Row(children: [
-                Text('Productos'),
-                Spacer(),
-                DropdownButton<String>(
-                  value: dropdownValue,
-                  items: <String>['Habilitados', 'Deshabilitados']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: TextStyle(
-                            color: CustomColor.primaryColor(), fontSize: 16),
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) async {
-                    if( newValue == 'Habilitados' ) {
-                        // Habilitados
-                        await productProvider.getProductsEnabled();
-                        
-                    } else {
-                      // inhabilitados
-                        await productProvider.getProductsDisabled();
-                    }
-                    setState(()  {
-                  
-                      dropdownValue = newValue!;
-                    });
-
-                  },
-                ),
-                SizedBox(
-                  width: 20,
-                )
-              ]),
-              onRowsPerPageChanged: (value) {
-                setState(() {
-                  _rowsPerPage = value ?? 10;
-                });
-              },
-              rowsPerPage: _rowsPerPage,
-            )),
+              child: WhiteCard(
+                  child: PaginatedDataTable(
+                columns: [
+            
+                  DataColumn(label: Text('Código')),
+                  DataColumn(label: Text('Nombre')),
+                  DataColumn(label: Text('Precio (S/.)')),
+                  DataColumn(label: Text('Costo (S/.)')),
+                  DataColumn(label: Text('Stock')),
+                  DataColumn(label: Text('Stock Mínimo')),
+                  DataColumn(label: Text('Categoría')),
+                  DataColumn(label: Text('Descripción')),
+                  DataColumn(label: Text('Acciones'))
+                ],
+                source: ProductsDTS(products, context),
+                header: Row(children: [
+                  Text('Productos'),
+                  Spacer(),
+                  DropdownButton<String>(
+                    value: dropdownValue,
+                    items: <String>['Habilitados', 'Deshabilitados']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(
+                              color: CustomColor.primaryColor(), fontSize: 16),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) async {
+                      if( newValue == 'Habilitados' ) {
+                          // Habilitados
+                          await productProvider.getProductsEnabled();
+                          
+                      } else {
+                        // inhabilitados
+                          await productProvider.getProductsDisabled();
+                      }
+                      setState(()  {
+                    
+                        dropdownValue = newValue!;
+                      });
+            
+                    },
+                  ),
+                  SizedBox(
+                    width: 20,
+                  )
+                ]),
+                onRowsPerPageChanged: (value) {
+                  setState(() {
+                    _rowsPerPage = value ?? 10;
+                  });
+                },
+                rowsPerPage: _rowsPerPage,
+              ),
+            ),
           )
         ],
       ),

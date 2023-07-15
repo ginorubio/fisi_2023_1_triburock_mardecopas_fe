@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:almacen_web_fe/providers/auth_provider.dart';
 
 import 'package:almacen_web_fe/providers/category_provider.dart';
@@ -53,6 +55,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scrollBehavior: CustomScrollBehavior(),
       debugShowCheckedModeBanner: false,
       title: 'Almacenera Mercantil web',
       initialRoute: '/',
@@ -77,4 +80,12 @@ class MyApp extends StatelessWidget {
                   MaterialStateProperty.all(Colors.grey.withOpacity(0.5)))),
     );
   }
+}
+
+class CustomScrollBehavior extends MaterialScrollBehavior { // A custom scroll behavior allows setting whichever input device types that we want, and in this case, we want mouse and touch support.
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.touch,
+      };
 }
