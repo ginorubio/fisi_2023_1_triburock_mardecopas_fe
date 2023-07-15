@@ -1,7 +1,9 @@
 
 import 'package:almacen_web_fe/models/http/movement_disabled_response.dart';
+import 'package:almacen_web_fe/models/http/movement_item_response.dart';
 import 'package:almacen_web_fe/models/http/movement_register_response.dart';
 import 'package:almacen_web_fe/models/http/movements_response.dart';
+import 'package:almacen_web_fe/models/movement_item.dart';
 import 'package:almacen_web_fe/models/movements_inputs.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +14,8 @@ import '../services/notifications_service.dart';
 
 class MovementsInputsProvider extends ChangeNotifier {
 
-    List<MovementsInputs> movementsInputs = [];
+  List<MovementsInputs> movementsInputs = [];
+  List<MovementItem> itemsMovementsInputs = [];
 
   getMovementsInputsEnabled() async {
 
@@ -142,6 +145,33 @@ Future newMovementInput( String codigo, String orden_compra, String fecha,
       throw('Error al inhabilitar el producto');
     }
 
+  }
+
+   getItemsMovementsInputsForID(int id) async {
+
+    try{
+      final resp = await ServiceApi.httpGet('ux-gestion-movimientos/sam/servicio-al-cliente/v1/obtener-items-entradas/$id');
+        final itemsMovementsResp = MovementItemResponse.fromMap(resp);
+
+        if (itemsMovementsResp.data != null){
+          this.itemsMovementsInputs = [...itemsMovementsResp.data!];
+        } else{
+          this.itemsMovementsInputs = [];
+          
+        }
+        print(this.itemsMovementsInputs);
+        notifyListeners();
+
+    } catch (e) {
+      print(e.toString());
+      this.movementsInputs = [];
+      NotificationsService.showSnackbarError('Error al Listar los items de movimientos de entrada');
+    }
+
+  }
+
+  clearItemsMovementsInputs(){
+    this.itemsMovementsInputs = [];
   }
 
 }

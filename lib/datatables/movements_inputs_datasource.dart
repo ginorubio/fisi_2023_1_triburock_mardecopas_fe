@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../services/notifications_service.dart';
 import '../ui/design/custom_colors.dart';
+import '../ui/modals/movements_inputs/show_movements_inputs.dart';
 
 class MovementsInputsDTS extends DataTableSource {
 
@@ -33,6 +34,21 @@ class MovementsInputsDTS extends DataTableSource {
         DataCell( 
           Row(
             children: [
+
+              IconButton(
+                icon: Icon( Icons.remove_red_eye_sharp, color: CustomColor.infoColor().withOpacity(0.8) ),
+                onPressed: () {
+                      movementIntputProvider.clearItemsMovementsInputs();
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+                              contentPadding: EdgeInsets.all(0),
+                              content: ShowMovementsInputsModal(movementInput: movementInput),
+                            );
+                          });
+                    },
+              ),
               /*
               IconButton(
                 icon: Icon( Icons.download, color: CustomColor.infoColor().withOpacity(0.8) ),

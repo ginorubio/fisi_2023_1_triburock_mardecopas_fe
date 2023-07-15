@@ -6,6 +6,8 @@ import 'package:almacen_web_fe/models/http/movements_response.dart';
 import 'package:almacen_web_fe/models/movements_outputs.dart';
 import 'package:flutter/material.dart';
 
+import '../models/http/movement_item_response.dart';
+import '../models/movement_item.dart';
 import '../models/product_item.dart';
 import '../services/local_storage.dart';
 import '../services/notifications_service.dart';
@@ -13,7 +15,7 @@ import '../services/notifications_service.dart';
 class MovementsOutputsProvider extends ChangeNotifier {
 
   List<MovementsOutputs> movementsOutputs = [];
-
+  List<MovementItem> itemsMovementsOutputs = [];
 
   
   getMovementsOutputsEnabled() async {
@@ -145,5 +147,30 @@ Future newMovementOutput( String codigo, String factura, String fecha,
     }
    }
 
+   getItemsMovementsOutputsForID(int id) async {
 
+    try{
+      final resp = await ServiceApi.httpGet('ux-gestion-movimientos/sam/servicio-al-cliente/v1/obtener-items-salidas/$id');
+        final itemsMovementsResp = MovementItemResponse.fromMap(resp);
+
+        if (itemsMovementsResp.data != null){
+          this.itemsMovementsOutputs = [...itemsMovementsResp.data!];
+        } else{
+          this.itemsMovementsOutputs = [];
+          
+        }
+        print(this.itemsMovementsOutputs);
+        notifyListeners();
+
+    } catch (e) {
+      this.itemsMovementsOutputs = [];
+      NotificationsService.showSnackbarError('Error al Listar los items de movimientos de salida');
+    }
+
+  }
+
+
+  clearItemsMovementsOutputs(){
+    this.itemsMovementsOutputs = [];
+  }
 }

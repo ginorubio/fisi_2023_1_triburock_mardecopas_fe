@@ -5,6 +5,7 @@ import 'package:almacen_web_fe/providers/movements_outputs_provider.dart';
 import 'package:almacen_web_fe/services/pdf_redirect.dart';
 import 'package:almacen_web_fe/ui/design/custom_colors.dart';
 import 'package:almacen_web_fe/ui/modals/movements_inputs/register_movements_inputs.dart';
+import 'package:almacen_web_fe/ui/modals/movements_outputs/show_movements_output.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,6 +37,20 @@ class MovementsDTS extends DataTableSource {
         DataCell( 
           Row(
             children: [
+              IconButton(
+                icon: Icon( Icons.remove_red_eye_sharp, color: CustomColor.infoColor().withOpacity(0.8) ),
+                onPressed: () {
+                      movementOutputProvider.clearItemsMovementsOutputs();
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+                              contentPadding: EdgeInsets.all(0),
+                              content: ShowMovementsOutputsModal(movementOutput: movementOutput),
+                            );
+                          });
+                    },
+              ),
               /*
                IconButton(
                  icon: Icon( Icons.download, color: CustomColor.infoColor().withOpacity(0.8) ),
