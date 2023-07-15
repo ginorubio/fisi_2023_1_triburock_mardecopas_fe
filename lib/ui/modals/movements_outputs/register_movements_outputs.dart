@@ -40,13 +40,13 @@ class _RegisterMovementsOutputsState extends State<RegisterMovementsOutputs> {
 
   @override
   Widget build(BuildContext context) {
-
+    final sizeGlobal = MediaQuery.of(context).size;
     final productsItemOutputs = Provider.of<ProductsItemProvider>(context).productsItemOutputs;
     final movementsOutputProvider = Provider.of<MovementsOutputsProvider>(context);
     return Container(
       padding: EdgeInsets.all(0),
       
-      width: 800, // 
+      width: (sizeGlobal.width > 1050) ? 800: 450, // 
       decoration: buildBoxDecoration(),
       child: ListView(
         physics: ClampingScrollPhysics(),
@@ -60,7 +60,108 @@ class _RegisterMovementsOutputsState extends State<RegisterMovementsOutputs> {
               style: CustomLabels.titleModals,
               ),
           ),
+          (sizeGlobal.width > 1050)
+          ?
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            
+            children: [
+              Container(
+                width: 400,
+                padding: EdgeInsets.only( left: 20, right: 20, bottom: 0, top: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                     CustomInputs.customTextFieldForm((value) => codigo = value, "Código", "Ingrese el código"),
+                     SizedBox(height: 20,),
+                     CustomInputs.customTextFieldForm((value) => factura = value, "Factura", "Ingresa tu factura "),
+                    SizedBox(height: 20,),
+                    CustomFlatButton(onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+                              contentPadding: EdgeInsets.all(0),
+                              content: RegisterProductIntemOutput(),
+                            );
+                          });
+                    },
+                    text: "Agregar productos", color: CustomColor.primaryColor(), colorText: Colors.white
+                    )
+                     
+                  ],
+                ),
+              ),
+              Container(
+                width: 400,
+                padding: EdgeInsets.only( left: 20, right: 20, bottom: 0, top: 20),
+                child: Column(
+
+                  children: [
+                     Row(
+                      children: [
+                        Text('Fecha : ${selectedDate.year}-${selectedDate.month}-${selectedDate.day}'),
+                        IconButton(onPressed: ()  {
+                          DatePicker.showDatePicker(
+                            
+                            context,
+                            showTitleActions: true,
+                            minTime: DateTime(2000),
+                            maxTime: DateTime(2030),
+                            onConfirm: (date) {
+                              setState(() {
+                                selectedDate = date;
+                              });
+                            },
+                            currentTime: selectedDate,
+                            locale: LocaleType.es,
+                          );
+                        }
+                        , icon: Icon(Icons.calendar_today))
+                      ],
+                    ),
+                    //CustomInputs.customTextFieldForm((value) => fecha = value, "Fecha", "AAAA-MM-dd"),
+                    SizedBox(height: 20,),
+                     CustomInputs.customTextFieldForm((value) => cliente = value, "Cliente", "Ingrese su nombre"),
+                     Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only( left: 40, right: 20, bottom: 20, top: 20),
+                            child: CustomFlatButton(onPressed: () => Navigator.of(context).pop(), text: "Cancelar", color: Colors.red, colorText: Colors.white,)
+                            ),
+                          Container(
+                            padding: EdgeInsets.only( left: 20, bottom: 20, top: 20),
+                            child: CustomFlatButton(onPressed: () async {
+                                if (codigo.isEmpty || factura.isEmpty || cliente.isEmpty || productsItemOutputs.isEmpty ) {
+                                  NotificationsService.showSnackbarError('Falta ingresar datos o los ingresados no son correctos');
+                                }else{
+                                  try {
+                                    final fechaResult = "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}";
+                                    await movementsOutputProvider.newMovementOutput(codigo, factura, fechaResult, cliente, productsItemOutputs);
+                                    NotificationsService.showSnackbar('El movimiento ${codigo}, Se ha registrado con exito !');
+                                    Navigator.of(context).pop();
+
+                                  } catch (e) {
+                                    Navigator.of(context).pop();
+                                    NotificationsService.showSnackbarError('No se pudo registrar el movimiento ');
+                                  }
+                                }
+
+
+                              },
+                              text: "Guardar", color: Colors.green, colorText: Colors.white,
+                              )
+                            )
+                        ],
+                      )
+                  ],
+                ),
+              )
+            ],
+          )
+          :
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             
             children: [

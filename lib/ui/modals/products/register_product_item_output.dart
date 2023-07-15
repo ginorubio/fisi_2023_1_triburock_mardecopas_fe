@@ -34,13 +34,14 @@ class _RegisterProductIntemOutputState extends State<RegisterProductIntemOutput>
 
   @override
   Widget build(BuildContext context) {
+    final sizeGlobal = MediaQuery.of(context).size;
     final productProvider = Provider.of<ProductsProvider>(context, listen: false);
     final productsItemProvider = Provider.of<ProductsItemProvider>(context, listen: false);
 
     return Container(
       padding: EdgeInsets.all(0),
       height: 400,
-      width: 800, // 
+      width: (sizeGlobal.width > 1050) ? 800: 400, // 
       decoration: buildBoxDecoration(),
       child: ListView(
         physics: ClampingScrollPhysics(),
@@ -54,7 +55,73 @@ class _RegisterProductIntemOutputState extends State<RegisterProductIntemOutput>
               style: CustomLabels.titleModals,
               ),
           ),
+          (sizeGlobal.width > 1050) 
+          ?
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            
+            children: [
+              Container(
+                width: 400,
+                padding: EdgeInsets.only( left: 20, right: 20, bottom: 0, top: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                     CustomInputs.customTextFieldForm((value) => codigo_product = value, "Código", "Ingrese el código"),
+                     SizedBox(height: 30,),
+                     CustomInputs.customTextFieldFormDisabled("Nommbre ", product.nombre ?? ""),
+                    SizedBox(height: 20,),
+                    CustomInputs.customTextFieldFormDisabled("Stock (${product.unidad_medida ?? ""})", (product.stock ?? 0).toString()),
+                    SizedBox(height: 20,),
+                    CustomInputs.customTextFieldFormDisabled("Categoría", product.categoria ?? ""),
+                     
+                  ],
+                ),
+              ),
+              Container(
+                width: 400,
+                
+                padding: EdgeInsets.only( left: 20, right: 20, bottom: 0, top: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(  bottom: 20),
+                      child: CustomFlatButton(onPressed: () async{
+
+                          if ( codigo_product.isEmpty ) {
+                            NotificationsService.showSnackbarError('Ingrese el código del producto para realizar la busqueda');
+
+                          }else{
+                            try{
+                              final productValue = await productProvider.getProductItemForCode(codigo_product);
+                              setState(()  {
+                                  this.product = productValue;
+                                });
+                            }catch (e){
+                              NotificationsService.showSnackbarError('No se encontro el producto de código: $codigo_product');
+                              setState(()  {
+                                  this.product = Products();
+                                });
+                            }
+                          }
+                        },
+                        text: "Buscar", color: CustomColor.primaryColor(), colorText: Colors.white,
+                        )
+                      ),
+                    CustomInputs.customTextFieldFormDisabled("Descripción", product.descripcion ?? ""),
+                    SizedBox(height: 20,),
+                    CustomInputs.customTextFieldFormDisabled("Precio (S/.) ", (product.precio ?? 0 ).toString()),
+                    SizedBox(height: 20,),
+                     CustomInputs.customTextFieldFormNumber((value) => cantidad = value, "Cantidad", "Ingrese la cantidad"),
+                  ],
+                ),
+              )
+            ],
+          )
+          :
+        
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             
             children: [

@@ -33,6 +33,7 @@ class _ProductsViewState extends State<ProductsView> {
 
   @override
   Widget build(BuildContext context) {
+    final sizeGlobal = MediaQuery.of(context).size;
     final products = Provider.of<ProductsProvider>(context).products;
     final productProvider = Provider.of<ProductsProvider>(context, listen: false);
     String searchValue = "";
@@ -45,7 +46,10 @@ class _ProductsViewState extends State<ProductsView> {
           Container(
             padding: EdgeInsets.only(bottom: 20),
             decoration: CustomBoxDecoration.navBoxDecoration(),
-            child: Row(
+            child:  
+            ( sizeGlobal.width > 1200 )
+            ?
+            Row(
               children: [
                 SizedBox(width: 40),
                 CustomInputs.customTextFieldFormSearch((value) => searchValue = value,  "buscar por código"),
@@ -90,7 +94,55 @@ class _ProductsViewState extends State<ProductsView> {
                     colorText: Colors.black),
                 SizedBox(width: 44)
               ],
-            ),
+            )
+            : 
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 10),
+                CustomInputs.customTextFieldFormSearch((value) => searchValue = value,  "buscar por código"),
+                SizedBox(height: 10),
+                CustomFlatButton(
+                    onPressed: () async {
+                      if (searchValue.isEmpty) {
+                        NotificationsService.showSnackbarError("Ingrese el código del Producto para realizar la búsqueda");
+                      }else{
+                        await productProvider.getProductsForCode(searchValue);
+                      }
+                       
+                    },
+                    text: "Buscar",
+                    color: Colors.white,
+                    colorText: Colors.black
+                ),
+                SizedBox(height: 10),
+                CustomFlatButton(
+                    onPressed: () async {
+                       await productProvider.getProductsLowStock();
+                    },
+                    text: "Listar Productos Bajo stock",
+                    color: Colors.white,
+                    colorText: Colors.black
+                ),
+                SizedBox(height: 10),
+                CustomFlatButton(
+                    onPressed: () {
+                      print("Tap Nuevo productos");
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+                              contentPadding: EdgeInsets.all(0),
+                              content: RegisterProductsModal(products: null),
+                            );
+                          });
+                    },
+                    text: "Nuevo",
+                    color: Colors.white,
+                    colorText: Colors.black),
+                    SizedBox(height: 10),
+              ],
+            )
           ),
           Container(
             color: Colors.grey.shade300,
@@ -159,3 +211,4 @@ class _ProductsViewState extends State<ProductsView> {
     );
   }
 }
+
