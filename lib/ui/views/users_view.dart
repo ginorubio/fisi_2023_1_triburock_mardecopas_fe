@@ -28,6 +28,7 @@ class _UsersViewState extends State<UsersView> {
 
   @override
   Widget build(BuildContext context) {
+    final sizeGlobal = MediaQuery.of(context).size;
     final users = Provider.of<UsersProvider>(context).users;
     final userProvider = Provider.of<UsersProvider>(context, listen: false);
     String searchValue = "";
@@ -38,9 +39,12 @@ class _UsersViewState extends State<UsersView> {
         children: [
           Navbar(text: "Usuarios"),
           Container(
-            padding: EdgeInsets.only(bottom: 20),
+            padding: (sizeGlobal.width > 950) ? EdgeInsets.only(bottom: 20) : EdgeInsets.only(left: 20) ,
             decoration: CustomBoxDecoration.navBoxDecoration(),
-            child: Row(
+            child: 
+            (sizeGlobal.width > 950)
+            ?
+            Row(
               children: [
                 SizedBox(width: 40),
                 CustomInputs.customTextFieldFormSearch((value) => searchValue = value,  "buscar por Documento de identidad"),
@@ -76,6 +80,46 @@ class _UsersViewState extends State<UsersView> {
                     color: Colors.white,
                     colorText: Colors.black),
                 SizedBox(width: 44)
+              ],
+            )
+            :
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 15),
+                CustomInputs.customTextFieldFormSearch((value) => searchValue = value,  "buscar por Documento de identidad"),
+                SizedBox(height: 15),
+                CustomFlatButton(
+                    onPressed: () async {
+
+                    if (searchValue.isEmpty) {
+                      NotificationsService.showSnackbarError("Ingrese el documento del usuario para realizar la búsqueda");
+                    }else{
+                        await userProvider.getUserForDNI(searchValue);
+                    }
+                      
+                       
+                    },
+                    text: "Buscar",
+                    color: Colors.white,
+                    colorText: Colors.black),
+                SizedBox(height: 15),
+                CustomFlatButton(
+                    onPressed: () {
+                      print("Tap Nuevo usuarios");
+                      showDialog(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+                              contentPadding: EdgeInsets.all(0),
+                              content: RegisterUsersModal(users: null),
+                            );
+                          });
+                    },
+                    text: "Nuevo",
+                    color: Colors.white,
+                    colorText: Colors.black),
+                SizedBox(height: 15),
               ],
             ),
           ),

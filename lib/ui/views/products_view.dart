@@ -44,7 +44,7 @@ class _ProductsViewState extends State<ProductsView> {
         children: [
           Navbar(text: "Productos"),
           Container(
-            padding: EdgeInsets.only(bottom: 20),
+            padding: (sizeGlobal.width > 1200) ? EdgeInsets.only(bottom: 20) : EdgeInsets.only(left: 20) ,
             decoration: CustomBoxDecoration.navBoxDecoration(),
             child:  
             ( sizeGlobal.width > 1200 )

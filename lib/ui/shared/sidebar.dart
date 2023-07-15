@@ -16,10 +16,11 @@ class Sidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sizeGlobal = MediaQuery.of(context).size;
     final sideMenuProvider = Provider.of<SideBarProvider>(context);
 
     return Container(
-      width: 240,
+      width: (sizeGlobal.width > 700 ) ? 240: 110,
       height: double.infinity,
       decoration: buildBoxDecoration(),
       child: ListView(
@@ -28,51 +29,51 @@ class Sidebar extends StatelessWidget {
           Logo(),
           SizedBox(height: 50),
           MenuItemCustom(
-            text: 'Inicio',
+            text: (sizeGlobal.width > 700 ) ? 'Inicio': "",
             icon: Icons.home,
             onPressed: () => navigateTo(Flurorouter.inicioRoute),
             isActive: sideMenuProvider.currentPage == Flurorouter.inicioRoute,
           ),
           MenuItemCustom(
-            text: 'Producto',
+            text: (sizeGlobal.width > 700 ) ?'Producto' : "",
             icon: Icons.production_quantity_limits_sharp,
             onPressed: () => navigateTo(Flurorouter.productosRoute),
             isActive:
                 sideMenuProvider.currentPage == Flurorouter.productosRoute,
           ),
           MenuItemCustom(
-            text: 'Categoría',
+            text: (sizeGlobal.width > 700 ) ? 'Categoría' : "",
             icon: Icons.category,
             onPressed: () => navigateTo(Flurorouter.categoriaRoute),
             isActive:
                 sideMenuProvider.currentPage == Flurorouter.categoriaRoute,
           ),
           MenuItemCustom(
-            text: 'Movimientos Salida',
+            text: (sizeGlobal.width > 700 ) ? 'Movimientos Salida': "",
             icon: Icons.keyboard_double_arrow_right,
             onPressed: () => navigateTo(Flurorouter.movimientosRoute),
             isActive:
                 sideMenuProvider.currentPage == Flurorouter.movimientosRoute,
           ),
           MenuItemCustom(
-            text: 'Movimientos Entrada',
+            text: (sizeGlobal.width > 700 ) ? 'Movimientos Entrada' : "",
             icon: Icons.keyboard_double_arrow_left_sharp,
             onPressed: () => navigateTo(Flurorouter.movimientosInputsRoute),
             isActive: sideMenuProvider.currentPage ==
                 Flurorouter.movimientosInputsRoute,
           ),
           MenuItemCustom(
-            text: 'Gestión de usuarios',
+            text: (sizeGlobal.width > 700 ) ? 'Gestión de usuarios': "",
             icon: Icons.person,
             onPressed: () => navigateTo(Flurorouter.usuariosRoute),
             isActive: sideMenuProvider.currentPage == Flurorouter.usuariosRoute,
           ),
           MenuItemCustom(
-              text: 'Información del sistema',
+              text: (sizeGlobal.width > 700 ) ? 'Información del sistema': "",
               icon: Icons.info,
               onPressed: () {}),
           MenuItemCustom(
-              text: 'Logout',
+              text: (sizeGlobal.width > 700 ) ? 'Logout': "",
               icon: Icons.exit_to_app_outlined,
               onPressed: () {
                 Provider.of<AuthProvider>(context, listen: false).logout();

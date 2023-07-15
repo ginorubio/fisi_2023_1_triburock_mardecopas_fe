@@ -38,6 +38,7 @@ class _CategoryViewState extends State<CategoryView> {
 
   @override
   Widget build(BuildContext context) {
+  final sizeGlobal = MediaQuery.of(context).size;
   final categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
   final categories = Provider.of<CategoryProvider>(context).categories;
   String searchValue = "";
@@ -49,9 +50,12 @@ class _CategoryViewState extends State<CategoryView> {
         children: [
           Navbar(text: "Categoria"),
           Container(
-            padding: EdgeInsets.only(bottom: 20),
+            padding: (sizeGlobal.width > 950) ? EdgeInsets.only(bottom: 20) : EdgeInsets.only(left: 20) ,
             decoration: CustomBoxDecoration.navBoxDecoration(),
-            child: Row(
+            child: 
+            (sizeGlobal.width > 950)
+            ?
+            Row(
               children: [
                 SizedBox(width: 40),
                 CustomInputs.customTextFieldFormSearch((value) => searchValue = value,  "buscar por código"),
@@ -88,6 +92,47 @@ class _CategoryViewState extends State<CategoryView> {
                 , text: "Nuevo",color: Colors.white,colorText: Colors.black),
                 
                 SizedBox(width: 44)
+              ],
+            )
+            :
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 15),
+                CustomInputs.customTextFieldFormSearch((value) => searchValue = value,  "buscar por código"),
+                SizedBox(height: 15),
+                CustomFlatButton(
+                  onPressed: () async {
+
+                    if (searchValue.isEmpty) {
+                      NotificationsService.showSnackbarError("Ingrese el código de la Categoría para realizar la búsqueda");
+                    }else{
+                        await categoryProvider.geCategoryForCode(searchValue);
+                    }
+                      
+                       
+                    },
+                 text: "Buscar" ,
+                  color: Colors.white,
+                  colorText: Colors.black
+                  ),
+
+                SizedBox(height: 15),
+                CustomFlatButton(onPressed: () {
+                  print("Tap Nueva Categoria");
+                  showDialog(
+                    context: context, 
+                    builder: ( _ ) {
+                      return AlertDialog(
+                        contentPadding: EdgeInsets.all(0),
+                        content: RegisterCategoryModal(category: null),
+                      );
+                    }
+                    );
+                }
+                , text: "Nuevo",color: Colors.white,colorText: Colors.black),
+                
+                SizedBox(height: 15)
               ],
             ),
           ),

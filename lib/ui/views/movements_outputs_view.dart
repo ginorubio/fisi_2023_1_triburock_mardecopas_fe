@@ -36,7 +36,7 @@ class _MovemenentsOutputsViewState extends State<MovemenentsOutputsView> {
 
   @override
   Widget build(BuildContext context) {
-
+  final sizeGlobal = MediaQuery.of(context).size;
   final movementsOutputs = Provider.of<MovementsOutputsProvider>(context).movementsOutputs;
   final movementsOutputsProvider  = Provider.of<MovementsOutputsProvider>(context, listen: false);
     String searchValue = "";
@@ -48,9 +48,12 @@ class _MovemenentsOutputsViewState extends State<MovemenentsOutputsView> {
         children: [
           Navbar(text: "Movimientos de Salida"),
           Container(
-            padding: EdgeInsets.only(bottom: 20),
+            padding: (sizeGlobal.width > 950 ) ? EdgeInsets.only(bottom: 20) : EdgeInsets.only(left: 20),
             decoration: CustomBoxDecoration.navBoxDecoration(),
-            child: Row(
+            child: 
+            (sizeGlobal.width > 950 )
+            ?
+            Row(
               children: [
                 SizedBox(width: 40),
                  CustomInputs.customTextFieldFormSearch((value) => searchValue = value,  "buscar por código"),
@@ -80,6 +83,40 @@ class _MovemenentsOutputsViewState extends State<MovemenentsOutputsView> {
                 }
                 , text: "Nuevo",color: Colors.white,colorText: Colors.black),
                 SizedBox(width: 44)
+              ],
+            )
+            :
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 15),
+                 CustomInputs.customTextFieldFormSearch((value) => searchValue = value,  "buscar por código"),
+                SizedBox(height: 15),
+                CustomFlatButton(
+                  onPressed: () async {
+                     if (searchValue.isEmpty){
+                        NotificationsService.showSnackbarError("Ingrese el código del Movimiento para realizar la búsqueda");
+                      }else{
+                         await movementsOutputsProvider.getMovementsOutputsForCode(searchValue);
+                      }
+                    
+                  }
+                , text: "Buscar" , color: Colors.white,colorText: Colors.black),
+                SizedBox(height: 15),
+                CustomFlatButton(onPressed: () {
+                  print("Tap Nuevo movimientos");
+                  showDialog(
+                    context: context, 
+                    builder: ( _ ) {
+                      return AlertDialog(
+                        contentPadding: EdgeInsets.all(0),
+                        content: RegisterMovementsOutputs(),
+                      );
+                    }
+                    );
+                }
+                , text: "Nuevo",color: Colors.white,colorText: Colors.black),
+                SizedBox(height: 15),
               ],
             ),
           ),

@@ -37,11 +37,12 @@ class _ShowMovementsOutputsModalState extends State<ShowMovementsOutputsModal> {
 
   @override
   Widget build(BuildContext context) {
+    final sizeGlobal = MediaQuery.of(context).size;
     final itemsMovementsOutputs = Provider.of<MovementsOutputsProvider>(context).itemsMovementsOutputs;
     return Container(
       padding: EdgeInsets.all(0),
       
-      width: 800, // 
+      width: (sizeGlobal.width > 1050) ? 800: 450, /// 
       decoration: buildBoxDecoration(),
       child: ListView(
         physics: ClampingScrollPhysics(),
@@ -55,7 +56,42 @@ class _ShowMovementsOutputsModalState extends State<ShowMovementsOutputsModal> {
               style: CustomLabels.titleModals,
               ),
           ),
+          (sizeGlobal.width > 1050)
+          ?
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            
+            children: [
+              Container(
+                width: 400,
+                padding: EdgeInsets.only( left: 20, right: 20, bottom: 0, top: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                     CustomInputs.customTextFieldFormDisabled("Código :", "${widget.movementOutput.codigo}"),
+                     SizedBox(height: 20,),
+                     CustomInputs.customTextFieldFormDisabled("Factura :", "${widget.movementOutput.factura}"),
+                  ],
+                ),
+              ),
+              Container(
+                width: 400,
+                padding: EdgeInsets.only( left: 20, right: 20, bottom: 0, top: 20),
+                child: Column(
+
+                  children: [
+                    
+                    CustomInputs.customTextFieldFormDisabled("Fecha :", "${widget.movementOutput.fecha_registro}"),
+                    SizedBox(height: 20,),
+                    CustomInputs.customTextFieldFormDisabled("Cliente :", "${widget.movementOutput.cliente}"),
+                   
+                  ],
+                ),
+              )
+            ],
+          )
+          :
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             
             children: [
