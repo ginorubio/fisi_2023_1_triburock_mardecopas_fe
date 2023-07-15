@@ -33,6 +33,7 @@ class MovementsDTS extends DataTableSource {
         DataCell( Text( movementOutput.codigo ?? "" ) ),
         DataCell( Text( movementOutput.factura ?? "" ) ),
         DataCell( Text( movementOutput.cliente ?? "" ) ),
+        DataCell( Text( movementOutput.fecha_registro ?? "" ) ),
         DataCell( Text( movementOutput.estado ?? "" ) ),
         DataCell( 
           Row(

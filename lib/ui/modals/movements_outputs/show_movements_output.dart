@@ -78,7 +78,7 @@ class _ShowMovementsOutputsModalState extends State<ShowMovementsOutputsModal> {
 
                   children: [
                     
-                    CustomInputs.customTextFieldFormDisabled("Fecha :", "Falta"),
+                    CustomInputs.customTextFieldFormDisabled("Fecha :", "${widget.movementOutput.fecha_registro}"),
                     SizedBox(height: 20,),
                     CustomInputs.customTextFieldFormDisabled("Cliente :", "${widget.movementOutput.cliente}"),
                    
@@ -96,10 +96,11 @@ class _ShowMovementsOutputsModalState extends State<ShowMovementsOutputsModal> {
                 DataColumn(label: Text('Nombre')),
                 DataColumn(label: Text('Cantidad')),
                 DataColumn(label: Text('Precio (S/.)')),
+                DataColumn(label: Text('Total (S/.)')),
               ],
               source: ItemMovementDTS(itemsMovementsOutputs, context),
               header: Row(children: [
-                Text('Items'),
+                Text('Productos'),
               ]),
               rowsPerPage: 4,
             )),

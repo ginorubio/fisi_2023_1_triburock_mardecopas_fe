@@ -30,6 +30,7 @@ class MovementsInputsDTS extends DataTableSource {
         DataCell( Text( movementInput.codigo ??"") ),
         DataCell( Text( movementInput.orden_compra ?? "" ) ),
         DataCell( Text( movementInput.proveedor ?? "" ) ),
+        DataCell( Text( movementInput.fecha_registro ?? "" ) ),
         DataCell( Text( movementInput.estado ?? "" ) ),
         DataCell( 
           Row(

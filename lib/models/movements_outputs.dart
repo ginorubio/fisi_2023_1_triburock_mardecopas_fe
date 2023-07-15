@@ -7,7 +7,7 @@ class MovementsOutputs {
          this.factura,
          this.cliente,
          this.estado,
-
+        this.fecha_registro,
         
     });
 
@@ -16,6 +16,7 @@ class MovementsOutputs {
     String? factura;
     String? cliente;
     String? estado;
+    String? fecha_registro;
 
 
     factory MovementsOutputs.fromJson(String str) => MovementsOutputs.fromMap(json.decode(str));
@@ -28,6 +29,7 @@ class MovementsOutputs {
         factura: json["factura"],
         cliente: json["cliente"],
         estado: json["estado"],
+        fecha_registro: json["fecha_registro"].substring(0,10)
 
         
     );
@@ -38,5 +40,6 @@ class MovementsOutputs {
         "factura": factura,
         "cliente": cliente,
         "estado": estado,
+        "fecha_registro": fecha_registro,
     };
 }

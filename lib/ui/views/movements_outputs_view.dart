@@ -91,6 +91,7 @@ class _MovemenentsOutputsViewState extends State<MovemenentsOutputsView> {
                 DataColumn(label: Text('Código')),
                 DataColumn(label: Text('Factura')),
                 DataColumn(label: Text('Cliente')),
+                DataColumn(label: Text('Fecha')),
                 DataColumn(label: Text('Estado')),
                 DataColumn(label: Text('Acciones'))
               ], 

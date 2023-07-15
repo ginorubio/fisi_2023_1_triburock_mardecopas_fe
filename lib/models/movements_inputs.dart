@@ -7,6 +7,7 @@ class MovementsInputs {
          this.orden_compra,
          this.proveedor,
          this.estado,
+         this.fecha_registro,
     });
 
     int? id;
@@ -14,6 +15,7 @@ class MovementsInputs {
     String? orden_compra;
     String? proveedor;
     String? estado;
+    String? fecha_registro;
 
     factory MovementsInputs.fromJson(String str) => MovementsInputs.fromMap(json.decode(str));
 
@@ -25,6 +27,7 @@ class MovementsInputs {
         orden_compra: json["orden_compra"],
         proveedor: json["proveedor"],
         estado: json["estado"],
+        fecha_registro: json["fecha_registro"].substring(0,10)
     );
 
     Map<String, dynamic> toMap() => {
@@ -32,6 +35,7 @@ class MovementsInputs {
         "codigo": codigo,
         "orden_compra": orden_compra,
         "proveedor": proveedor,
-        "estado": estado
+        "estado": estado,
+        "fecha_registro": fecha_registro
     };
 }

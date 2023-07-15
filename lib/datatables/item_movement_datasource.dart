@@ -17,7 +17,7 @@ class ItemMovementDTS extends DataTableSource {
       DataCell(Text(movementItem.nombre ?? "")),
       DataCell(Text(movementItem.cantidad.toString())),
       DataCell(Text(movementItem.precio.toString() )),
-     
+      DataCell(Text(getTotalPrecioXCantidad(movementItem.precio, movementItem.cantidad).toString() )),
     ]);
   }
 
@@ -30,4 +30,9 @@ class ItemMovementDTS extends DataTableSource {
 
   @override
   int get selectedRowCount => 0;
+
+  double getTotalPrecioXCantidad(double? precio, int? cantidad){
+    final total = (precio ?? 0)*(cantidad ?? 0);
+    return total;
+  }
 }

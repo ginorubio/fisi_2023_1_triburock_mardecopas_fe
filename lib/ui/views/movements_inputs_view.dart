@@ -92,6 +92,7 @@ class _MovemenentsInputsViewState extends State<MovemenentsInputsView> {
                 DataColumn(label: Text('Código')),
                 DataColumn(label: Text('Orden de compra')),
                 DataColumn(label: Text('Proveedor')),
+                DataColumn(label: Text('Fecha')),
                 DataColumn(label: Text('Estado')),
                 DataColumn(label: Text('Acciones'))
               ],
